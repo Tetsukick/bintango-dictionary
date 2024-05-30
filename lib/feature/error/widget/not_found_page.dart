@@ -30,7 +30,7 @@ class NotFoundPage extends ConsumerWidget {
                   ResponsiveBreakpoints.of(context)
                       .largerThan(MOBILE) ? 80 : 48,),
                   const SizedBox(width: 16,),
-                  Assets.image.bintangoTranslateLogo.image(height:
+                  Assets.image.bintangoDictionaryLogo.svg(height:
                   ResponsiveBreakpoints.of(context)
                       .largerThan(MOBILE) ? 80 : 48,),
                 ],

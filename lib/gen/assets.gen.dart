@@ -8,6 +8,8 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class $AssetsEnvGen {
   const $AssetsEnvGen();
@@ -28,9 +30,9 @@ class $AssetsEnvGen {
 class $AssetsImageGen {
   const $AssetsImageGen();
 
-  /// File path: assets/image/bintango-translate-logo.png
-  AssetGenImage get bintangoTranslateLogo =>
-      const AssetGenImage('assets/image/bintango-translate-logo.png');
+  /// File path: assets/image/bintango-dictionary-logo.svg
+  SvgGenImage get bintangoDictionaryLogo =>
+      const SvgGenImage('assets/image/bintango-dictionary-logo.svg');
 
   /// File path: assets/image/bintango_logo_256.png
   AssetGenImage get bintangoLogo256 =>
@@ -67,8 +69,8 @@ class $AssetsImageGen {
       const AssetGenImage('assets/image/reverse_128.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
-        bintangoTranslateLogo,
+  List<dynamic> get values => [
+        bintangoDictionaryLogo,
         bintangoLogo256,
         english64,
         example64,
@@ -180,6 +182,59 @@ class AssetGenImage {
       _assetName,
       bundle: bundle,
       package: package,
+    );
+  }
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
+}
+
+class SvgGenImage {
+  const SvgGenImage(this._assetName);
+
+  final String _assetName;
+
+  SvgPicture svg({
+    Key? key,
+    bool matchTextDirection = false,
+    AssetBundle? bundle,
+    String? package,
+    double? width,
+    double? height,
+    BoxFit fit = BoxFit.contain,
+    AlignmentGeometry alignment = Alignment.center,
+    bool allowDrawingOutsideViewBox = false,
+    WidgetBuilder? placeholderBuilder,
+    String? semanticsLabel,
+    bool excludeFromSemantics = false,
+    SvgTheme theme = const SvgTheme(),
+    ColorFilter? colorFilter,
+    Clip clipBehavior = Clip.hardEdge,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
+  }) {
+    return SvgPicture.asset(
+      _assetName,
+      key: key,
+      matchTextDirection: matchTextDirection,
+      bundle: bundle,
+      package: package,
+      width: width,
+      height: height,
+      fit: fit,
+      alignment: alignment,
+      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
+      placeholderBuilder: placeholderBuilder,
+      semanticsLabel: semanticsLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      theme: theme,
+      colorFilter: colorFilter,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      clipBehavior: clipBehavior,
+      cacheColorFilter: cacheColorFilter,
     );
   }
 

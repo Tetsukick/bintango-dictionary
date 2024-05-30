@@ -47,7 +47,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Title(
       color: ColorConstants.bgPinkColor,
-      title: 'Bintango Dictionary | AIでインドネシア語翻訳と同時に一括単語検索',
+      title: 'Bintango Dictionary | インドネシア語と日本語の辞書 和尼辞書&尼和辞書',
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
@@ -63,7 +63,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ResponsiveBreakpoints.of(context)
                         .largerThan(MOBILE) ? 80 : 48,),
                     const SizedBox(width: 16,),
-                    Assets.image.bintangoTranslateLogo.image(height:
+                    Assets.image.bintangoDictionaryLogo.svg(height:
                     ResponsiveBreakpoints.of(context)
                         .largerThan(MOBILE) ? 80 : 48,),
                   ],
