@@ -119,6 +119,45 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     }
   }
 
+  Future<TangoEntity?> searchWord(String value) async {
+    TangoEntity? searchedWord;
+    final regExpForSpaceAndNewlines = RegExp(r'[\s\n]');
+    final wordList = value.split(regExpForSpaceAndNewlines);
+    final regExpOfNyaMuKu = RegExp(r'(nya|ku|mu)$');
+    const baseSearchLength = 3;
+    for (var i = 0; i < wordList.length; i++) {
+      final remainCount = [baseSearchLength, wordList.length - i].reduce(min);
+      var searchText = '';
+      for (var j = 0; j < remainCount; j++) {
+        if (j>0) {
+          searchText = '$searchText ';
+        }
+        searchText = searchText + wordList[i + j];
+        if (j == 0) {
+          if (searchText.contains(regExpOfNyaMuKu)) {
+            final replacedSearchText =
+            searchText.replaceAll(regExpOfNyaMuKu, '');
+            if (searchedWord != null) {
+              continue;
+            }
+            final searchResult = await search(replacedSearchText);
+            if (searchResult.isNotEmpty) {
+              searchedWord = searchResult.first;
+            }
+          }
+        }
+        if (searchedWord != null) {
+          continue;
+        }
+        final searchResult = await search(searchText);
+        if (searchResult.isNotEmpty) {
+          searchedWord = searchResult.first;
+        }
+      }
+    }
+    return searchedWord;
+  }
+
   Future<List<TangoEntity>> searchIncludeWords(String value) async {
     final includedWords = <TangoEntity>[];
     final regExpForSpaceAndNewlines = RegExp(r'[\s\n]');

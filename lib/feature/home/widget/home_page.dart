@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card.dart';
+import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card_wide.dart';
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
 import 'package:bintango_indonesian_dictionary/shared/route/app_router.dart';
@@ -125,12 +126,15 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _widgetContent(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          _searchBoxArea(context, ref),
-          _detailDescriptionArea(context, ref),
-          _includedWordArea(context, ref),
-        ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            _searchBoxArea(context, ref),
+            const SizedBox(height: 12,),
+            _searchedWord(context, ref),
+          ],
+        ),
       ),
     );
   }
@@ -149,35 +153,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       child: Center(
         child: _inputField(context, ref),
-      ),
-    );
-  }
-
-  Widget _changeLangSourceButton(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(translateNotifierProvider.notifier);
-    final state = ref.watch(translateNotifierProvider);
-    return ElevatedButton(
-      onPressed: () async {
-        notifier.changeLangSource();
-        if (state.inputtedText.isNotEmpty) {
-          await Future.delayed(const Duration(milliseconds: 500));
-          _inputController.value = _inputController.value.copyWith(
-            text: state.inputtedText,
-            selection: TextSelection
-                .collapsed(offset: state.inputtedText.length),
-          );
-          await notifier.translate();
-          await notifier.searchIncludedWords();
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(
-          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 16 : 8,),
-        child: Assets.image.reverse128.image(width:
-          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 32 : 24,),
       ),
     );
   }
@@ -236,6 +211,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     } else {
       return const SizedBox.shrink();
     }
+  }
+
+  Widget _searchedWord(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(translateNotifierProvider);
+    return WordDetailCardWide(entity: state.searchedWord);
   }
 
   Widget _includedWordArea(BuildContext context, WidgetRef ref) {

@@ -21,16 +21,6 @@ class TranslateNotifier extends _$TranslateNotifier {
 
   late final _translateProvider = ref.read(translateRepositoryProvider);
 
-  void changeLangSource() {
-    state.isLanguageSourceJapanese = !state.isLanguageSourceJapanese;
-    if (state.translateResponse != null && state.translateResponse!.text.isNotEmpty) {
-      state
-          ..inputtedText = state.translateResponse!.text
-          ..translateResponse = null;
-    }
-    state = state.copyWith();
-  }
-
   Future<void> updateInputText(String text) async {
     state.inputtedText = text;
     state = state.copyWith();
@@ -38,52 +28,51 @@ class TranslateNotifier extends _$TranslateNotifier {
     await Future.delayed(const Duration(seconds: 2));
     if (state.inputtedText == text && state.inputtedText.length >= 3) {
       FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
-      await translate();
-      unawaited(searchIncludedWords());
+      await searchWord();
+      // unawaited(searchIncludedWords());
     }
-    await Future.delayed(const Duration(seconds: 2));
-    if (state.inputtedText == text && state.inputtedText.length >= 3) {
-      await getDetailExplanation();
-    }
+    // await Future.delayed(const Duration(seconds: 2));
+    // if (state.inputtedText == text && state.inputtedText.length >= 3) {
+    //   await getDetailExplanation();
+    // }
   }
 
-  Future<void> translate() async {
+  Future<void> searchWord() async {
     state.isLoading = true;
     state = state.copyWith();
-    final response = await _translateProvider.translate(
-        text: state.inputtedText,
-        isSourceJapanese: state.isLanguageSourceJapanese,);
-    state
-      ..translateResponse = response
-      ..isLoading = false;
+    final response = await _translateProvider.searchWord(state.inputtedText,);
+    if (response != null) {
+      state.searchedWord = response;
+    }
+    state.isLoading = false;
     state = state.copyWith();
   }
 
   Future<void> getDetailExplanation() async {
-    state.isLoadingGrammarExplanation = true;
-    state = state.copyWith();
-    if (state.translateResponse != null && state.translateResponse!.text.isNotEmpty) {
-      final response = await _translateProvider.getDetailExplanation(
-          text: state.isLanguageSourceJapanese
-              ? state.translateResponse!.text : state.inputtedText,
-          isSourceJapanese: state.isLanguageSourceJapanese,);
-      state
-        ..getDetailExplanationResponse = response
-        ..isLoadingGrammarExplanation = false;
-      state = state.copyWith();
-    }
+    // state.isLoadingGrammarExplanation = true;
+    // state = state.copyWith();
+    // if (state.translateResponse != null && state.translateResponse!.text.isNotEmpty) {
+    //   final response = await _translateProvider.getDetailExplanation(
+    //       text: state.isLanguageSourceJapanese
+    //           ? state.translateResponse!.text : state.inputtedText,
+    //       isSourceJapanese: state.isLanguageSourceJapanese,);
+    //   state
+    //     ..getDetailExplanationResponse = response
+    //     ..isLoadingGrammarExplanation = false;
+    //   state = state.copyWith();
+    // }
   }
 
   Future<void> searchIncludedWords() async {
-    state.isLoadingWordList = true;
-    state = state.copyWith();
-    final includedWordList =
-      await _translateProvider.searchIncludeWords(
-          state.isLanguageSourceJapanese
-              ? state.translateResponse?.text ?? '' : state.inputtedText,);
-    state
-      ..includedWords = includedWordList
-      ..isLoadingWordList = false;
-    state = state.copyWith();
+    // state.isLoadingWordList = true;
+    // state = state.copyWith();
+    // final includedWordList =
+    //   await _translateProvider.searchIncludeWords(
+    //       state.isLanguageSourceJapanese
+    //           ? state.translateResponse?.text ?? '' : state.inputtedText,);
+    // state
+    //   ..includedWords = includedWordList
+    //   ..isLoadingWordList = false;
+    // state = state.copyWith();
   }
 }

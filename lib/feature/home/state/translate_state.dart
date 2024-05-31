@@ -12,8 +12,8 @@ class TranslateState with _$TranslateState {
     @Default(false) bool isLoadingWordList,
     @Default(false) bool isLanguageSourceJapanese,
     @Default('') String inputtedText,
-    TranslateResponse? translateResponse,
     TranslateResponse? getDetailExplanationResponse,
     @Default([]) List<TangoEntity> includedWords,
+    @Default(null) TangoEntity? searchedWord,
   }) = _TranslateState;
 }
