@@ -68,6 +68,10 @@ class $AssetsImageGen {
   AssetGenImage get reverse128 =>
       const AssetGenImage('assets/image/reverse_128.png');
 
+  /// File path: assets/image/searchbox_background.png
+  AssetGenImage get searchboxBackground =>
+      const AssetGenImage('assets/image/searchbox_background.png');
+
   /// List of all assets
   List<dynamic> get values => [
         bintangoDictionaryLogo,
@@ -79,7 +83,8 @@ class $AssetsImageGen {
         infoNotes,
         japan64,
         japanFuji64,
-        reverse128
+        reverse128,
+        searchboxBackground
       ];
 }
 

@@ -31,7 +31,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
 
   final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _outputController = TextEditingController();
   final _iconHeight = 20.0;
   final _iconWidth = 20.0;
 
@@ -128,50 +127,28 @@ class _HomePageState extends ConsumerState<HomePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _translateArea(context, ref),
+          _searchBoxArea(context, ref),
           _detailDescriptionArea(context, ref),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              height: 2,
-              width: double.infinity,
-              color: ColorConstants.primaryRed900.withOpacity(0.2),
-            ),
-          ),
           _includedWordArea(context, ref),
         ],
       ),
     );
   }
 
-  Widget _translateArea(BuildContext context, WidgetRef ref) {
+  Widget _searchBoxArea(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
-    return SizedBox(
-      height: 300,
-      child: Stack(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              _inputOutputField(
-                context,
-                ref,
-                isJapanese: state.isLanguageSourceJapanese,
-                isInput: true,),
-              SizedBox(width: ResponsiveBreakpoints.of(context)
-                  .largerThan(MOBILE) ? 24 : 4,),
-              _inputOutputField(
-                context,
-                ref,
-                isJapanese: !state.isLanguageSourceJapanese,
-                isInput: false,),
-              const Spacer(),
-            ],
-          ),
-          Align(
-            child: _changeLangSourceButton(context, ref),
-          ),
-        ],
+    return Container(
+      height: 200,
+      width: MediaQuery.of(context).size.width / 2,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: Assets.image.searchboxBackground.provider(),
+          fit: BoxFit.fill,
+        ),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Center(
+        child: _inputField(context, ref),
       ),
     );
   }
@@ -205,112 +182,50 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Widget _inputOutputField(
+  Widget _inputField(
       BuildContext context,
       WidgetRef ref,
-      {
-        required bool isJapanese,
-        required bool isInput,
-      }) {
+      ) {
     final notifier = ref.watch(translateNotifierProvider.notifier);
     final state = ref.watch(translateNotifierProvider);
-    if (state.translateResponse != null) {
-      _outputController.value = _outputController.value.copyWith(
-        text: state.translateResponse!.text,
-        selection: TextSelection
-            .collapsed(offset: state.translateResponse!.text.length),
-      );
-    }
-    return Card(
-      color: Colors.white,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width /
-            (ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 3 : 2.2),
-        height: 300,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: _languageTitle(context, isJapanese: isJapanese),
-            ),
-            Container(
-              height: 1,
-              width: double.infinity,
-              color: ColorConstants.strokeGrey,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: isInput ? TextField(
-                maxLines: 6,
-                maxLength: isInput ? 500 : null,
-                controller: isInput ? _inputController : _outputController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  filled: true,
-                  hintText: 'ここに翻訳したい文章を入力してください。',
-                  alignLabelWithHint: true,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: _inputController.clear,
-                  ),
-                ),
-                onChanged: notifier.updateInputText,
-              ) : SizedBox(
-                height: 180,
-                child: Stack(
-                  children: [
-                    Visibility(
-                      visible: state.translateResponse != null
-                          && state.translateResponse!.text.isNotEmpty,
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: IconButton(
-                          onPressed: () async {
-                            FirebaseAnalyticsUtils.eventsTrack(HomeItem.copy);
-                            await Clipboard.setData(ClipboardData(text:
-                              state.translateResponse!.text,),);
-                            snackbarSuccess('クリップボードにコピーしました。');
-                          },
-                          icon: const Icon(Icons.copy),
-                        ),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: TextWidget
-                            .titleGraySmallBold(
-                              state.isLoading ? 'loading...'
-                                  : state.translateResponse?.text ?? 'テキストを入力すると翻訳結果がこちらに表示されます。',
-                              maxLines: 100,
-                              textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: _searchBoxTitle(context),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: TextField(
+            maxLength: 50,
+            controller: _inputController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              hintText: 'ここに調べたい単語やフレーズを入力してください。',
+              alignLabelWithHint: true,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: _inputController.clear,
               ),
             ),
-          ],
+            onChanged: notifier.updateInputText,
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  Widget _languageTitle(BuildContext context, {required bool isJapanese}) {
+  Widget _searchBoxTitle(BuildContext context,) {
     final imageHeight = ResponsiveBreakpoints.of(context)
         .largerThan(MOBILE) ? 28 : 20;
-    return Row(
-      children: [
-        if (isJapanese) Assets.image.japan64.image(height: 28)
-          else Assets.image.indonesia64.image(height: 28),
-        const SizedBox(width: 8,),
-        Flexible(
-          child: TextWidget.titleGrayMediumBold(
-            isJapanese ? '日本語' : 'インドネシア語',),
-        ),
-      ],
+    return Flexible(
+      child: TextWidget.titleRedLargestBold(
+        'インドネシア語でも日本語でも入力できます♪',),
     );
   }
 
