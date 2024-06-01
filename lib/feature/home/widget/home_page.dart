@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
+import 'package:bintango_indonesian_dictionary/feature/home/widget/explanation_detail_card.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card_wide.dart';
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
@@ -10,15 +11,11 @@ import 'package:bintango_indonesian_dictionary/shared/route/app_router.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/analytics/analytics_parameters.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/analytics/firebase_analytics.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
-import 'package:bintango_indonesian_dictionary/shared/widget/snackbar.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
-import 'package:bintango_indonesian_dictionary/feature/home/widget/explanation_detail_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});

@@ -55,7 +55,7 @@ class TokenRepository implements TokenRepositoryProtocol {
       const storage = FlutterSecureStorage();
       try {
         await storage.write(
-            key: StoreKey.token.toString(), value: tokenToJson(token));
+            key: StoreKey.token.toString(), value: tokenToJson(token),);
       } on Exception catch (e) {
         log(e.toString());
       }

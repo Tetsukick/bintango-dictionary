@@ -65,7 +65,7 @@ class WordDetailCard extends ConsumerWidget {
               const Skeleton(width: 128, height: 18,).shimmer,
               const SizedBox(height: 4),
               const Skeleton(width: 106, height: 18,).shimmer,
-              const SizedBox(height: 8)
+              const SizedBox(height: 8),
             ],
           ),
         ),
