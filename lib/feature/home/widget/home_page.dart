@@ -184,7 +184,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    hintText: 'ここに調べたい単語やフレーズを入力してください。',
+                    hintText: '調べたい単語やフレーズを入力してください。',
                     alignLabelWithHint: true,
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
@@ -217,12 +217,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _searchBoxTitle(BuildContext context,) {
-    final imageHeight = ResponsiveBreakpoints.of(context)
-        .largerThan(MOBILE) ? 28 : 20;
-    return Flexible(
-      child: TextWidget.titleRedLargestBold(
-        'インドネシア語でも日本語でも入力できます♪',),
-    );
+    return TextWidget.titleRedLargestBold(
+      'インドネシア語でも日本語でも入力できます♪',);
   }
 
   Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {
