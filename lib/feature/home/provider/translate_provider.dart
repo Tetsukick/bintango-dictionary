@@ -25,12 +25,12 @@ class TranslateNotifier extends _$TranslateNotifier {
     state.inputtedText = text;
     state = state.copyWith();
 
-    await Future.delayed(const Duration(seconds: 2));
-    if (state.inputtedText == text && state.inputtedText.length >= 3) {
-      FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
-      await searchWord();
-      // unawaited(searchIncludedWords());
-    }
+    // await Future.delayed(const Duration(seconds: 2));
+    // if (state.inputtedText == text && state.inputtedText.length >= 3) {
+    //   FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
+    //   await searchWord();
+    //   // unawaited(searchIncludedWords());
+    // }
     // await Future.delayed(const Duration(seconds: 2));
     // if (state.inputtedText == text && state.inputtedText.length >= 3) {
     //   await getDetailExplanation();
@@ -38,6 +38,9 @@ class TranslateNotifier extends _$TranslateNotifier {
   }
 
   Future<void> searchWord() async {
+    if (state.inputtedText.length <= 1) {
+      return;
+    }
     state.isLoading = true;
     state = state.copyWith();
     final response = await _translateProvider.searchWord(state.inputtedText,);

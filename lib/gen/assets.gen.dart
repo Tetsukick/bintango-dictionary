@@ -68,6 +68,10 @@ class $AssetsImageGen {
   AssetGenImage get reverse128 =>
       const AssetGenImage('assets/image/reverse_128.png');
 
+  /// File path: assets/image/search_128.png
+  AssetGenImage get search128 =>
+      const AssetGenImage('assets/image/search_128.png');
+
   /// File path: assets/image/searchbox_background.png
   AssetGenImage get searchboxBackground =>
       const AssetGenImage('assets/image/searchbox_background.png');
@@ -84,6 +88,7 @@ class $AssetsImageGen {
         japan64,
         japanFuji64,
         reverse128,
+        search128,
         searchboxBackground
       ];
 }

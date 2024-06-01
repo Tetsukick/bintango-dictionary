@@ -29,8 +29,8 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
 
   final TextEditingController _inputController = TextEditingController();
-  final _iconHeight = 20.0;
-  final _iconWidth = 20.0;
+  final _iconHeight = 28.0;
+  final _iconWidth = 28.0;
 
   @override
   void initState() {
@@ -169,23 +169,47 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: TextField(
-            maxLength: 50,
-            controller: _inputController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+                child: TextField(
+                  maxLength: 50,
+                  controller: _inputController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    hintText: 'ここに調べたい単語やフレーズを入力してください。',
+                    alignLabelWithHint: true,
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: _inputController.clear,
+                    ),
+                  ),
+                  onChanged: notifier.updateInputText,
+                ),
               ),
-              filled: true,
-              hintText: 'ここに調べたい単語やフレーズを入力してください。',
-              alignLabelWithHint: true,
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: _inputController.clear,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: ColorConstants.primaryRed900,
+                  shape: const CircleBorder(),
+                ),
+                onPressed: notifier.searchWord,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Assets.image.search128.image(
+                    height: _iconHeight,
+                    width: _iconWidth,
+                  ),
+                ),
               ),
-            ),
-            onChanged: notifier.updateInputText,
+            ],
           ),
         ),
       ],
