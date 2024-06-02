@@ -190,6 +190,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   ),
                   onChanged: notifier.updateInputText,
+                  onEditingComplete: () {
+                    ref.read(routerProvider).go(
+                      DictionaryDetailRoute.path
+                          .replaceFirst(':searchWord', state.inputtedText),);
+                  },
                 ),
               ),
               ElevatedButton(

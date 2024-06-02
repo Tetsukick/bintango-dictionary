@@ -191,6 +191,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                     counterText: '',
                   ),
                   onChanged: notifier.updateInputText,
+                  onEditingComplete: notifier.searchWord,
                 ),
               ),
               ElevatedButton(
