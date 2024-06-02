@@ -8,6 +8,7 @@ part of 'app_router.dart';
 
 List<RouteBase> get $appRoutes => [
       $appRoute,
+      $dictionaryDetailRoute,
       $signInRoute,
       $signUpRoute,
     ];
@@ -22,6 +23,31 @@ extension $AppRouteExtension on AppRoute {
 
   String get location => GoRouteData.$location(
         '/',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $dictionaryDetailRoute => GoRouteData.$route(
+      path: '/dictionary/detail/:searchWord',
+      factory: $DictionaryDetailRouteExtension._fromState,
+    );
+
+extension $DictionaryDetailRouteExtension on DictionaryDetailRoute {
+  static DictionaryDetailRoute _fromState(GoRouterState state) =>
+      DictionaryDetailRoute(
+        state.pathParameters['searchWord']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/dictionary/detail/${Uri.encodeComponent(searchWord)}',
       );
 
   void go(BuildContext context) => context.go(location);

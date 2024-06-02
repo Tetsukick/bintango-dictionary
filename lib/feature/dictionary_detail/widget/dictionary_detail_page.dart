@@ -8,6 +8,8 @@ import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_c
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
 import 'package:bintango_indonesian_dictionary/shared/route/app_router.dart';
+import 'package:bintango_indonesian_dictionary/shared/util/analytics/analytics_parameters.dart';
+import 'package:bintango_indonesian_dictionary/shared/util/analytics/firebase_analytics.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +17,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class DictionaryDetailPage extends ConsumerStatefulWidget {
+  DictionaryDetailPage({required this. searchWord, super.key});
+
+  String searchWord;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return _HomePageState();
+    return _DictionaryDetailPageState();
   }
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
 
   final TextEditingController _inputController = TextEditingController();
   final _iconHeight = 28.0;
@@ -36,6 +40,10 @@ class _HomePageState extends ConsumerState<HomePage> {
     // FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BThome);
     final loading = querySelector('.loading') as DivElement?;
     if (loading != null) loading.remove();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.watch(translateNotifierProvider.notifier)
+          .searchWithWord(widget.searchWord);
+    });
   }
 
   @override
@@ -45,8 +53,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       title: 'Bintango Dictionary | インドネシア語と日本語の辞書 和尼辞書&尼和辞書',
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
-              ? 120 : 80,
+          toolbarHeight: 80,
           backgroundColor: ColorConstants.bgPinkColor,
           title: Row(
             children: [
@@ -54,13 +61,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               InkWell(
                 child: Row(
                   children: [
-                    Assets.image.bintangoLogo256.image(height:
-                    ResponsiveBreakpoints.of(context)
-                        .largerThan(MOBILE) ? 80 : 48,),
+                    Assets.image.bintangoLogo256.image(height: 48,),
                     const SizedBox(width: 16,),
-                    Assets.image.bintangoDictionaryLogo.svg(height:
-                    ResponsiveBreakpoints.of(context)
-                        .largerThan(MOBILE) ? 80 : 48,),
+                    Assets.image.bintangoDictionaryLogo.svg(height: 48,),
                   ],
                 ),
                 onTap: () {
@@ -137,12 +140,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _searchBoxArea(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
     return Container(
-      height: 200,
+      height: 120,
       width: MediaQuery.of(context).size.width / 2,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Assets.image.searchboxBackground.provider(),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(24),
       ),
@@ -157,14 +160,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       WidgetRef ref,
       ) {
     final notifier = ref.watch(translateNotifierProvider.notifier);
-    final state = ref.watch(translateNotifierProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: _searchBoxTitle(context),
-        ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -198,11 +196,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   backgroundColor: ColorConstants.primaryRed900,
                   shape: const CircleBorder(),
                 ),
-                onPressed: () {
-                  ref.read(routerProvider).go(
-                      DictionaryDetailRoute.path
-                          .replaceFirst(':searchWord', state.inputtedText),);
-                },
+                onPressed: notifier.searchWord,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Assets.image.search128.image(
@@ -216,11 +210,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ],
     );
-  }
-
-  Widget _searchBoxTitle(BuildContext context,) {
-    return TextWidget.titleRedLargestBold(
-      'インドネシア語でも日本語でも入力できます♪',);
   }
 
   Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {

@@ -2,11 +2,14 @@
 // @AdaptiveAutoRouter
 // @CustomAutoRouter
 
-import 'package:bintango_indonesian_dictionary/feature/error/widget/not_found_page.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:bintango_indonesian_dictionary/app/widget/app_start_page.dart';
 import 'package:bintango_indonesian_dictionary/feature/auth/widget/sign_in_page.dart';
 import 'package:bintango_indonesian_dictionary/feature/auth/widget/sign_up_page.dart';
+import 'package:bintango_indonesian_dictionary/feature/dictionary_detail/widget/dictionary_detail_page.dart';
+import 'package:bintango_indonesian_dictionary/feature/error/widget/not_found_page.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -36,6 +39,26 @@ class AppRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AppStartPage();
+  }
+}
+
+@TypedGoRoute<DictionaryDetailRoute>(path: DictionaryDetailRoute.path)
+class DictionaryDetailRoute extends GoRouteData {
+  const DictionaryDetailRoute(this.searchWord);
+
+  static const path = '/dictionary/detail/:searchWord';
+
+  final String searchWord;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    // final searchWordInPath = state.pathParameters['searchWord'];
+    log('searchWord from path: $searchWord');
+    if (searchWord != null) {
+      return DictionaryDetailPage(searchWord: searchWord);
+    } else {
+      return const AppStartPage();
+    }
   }
 }
 

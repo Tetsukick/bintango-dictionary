@@ -37,6 +37,12 @@ class TranslateNotifier extends _$TranslateNotifier {
     // }
   }
 
+  Future<void> searchWithWord(String text) async {
+    state.inputtedText = text;
+    state = state.copyWith();
+    await searchWord();
+  }
+
   Future<void> searchWord() async {
     if (state.inputtedText.length <= 1) {
       return;
