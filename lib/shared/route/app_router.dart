@@ -24,7 +24,6 @@ GoRouter router(RouterRef ref) {
   return GoRouter(
     navigatorKey: navigatorKey,
     debugLogDiagnostics: true,
-    initialLocation: AppRoute.path,
     routes: $appRoutes,
     errorBuilder: (context, state) => const NotFoundPage(),
   );
@@ -54,11 +53,7 @@ class DictionaryDetailRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     // final searchWordInPath = state.pathParameters['searchWord'];
     log('searchWord from path: $searchWord');
-    if (searchWord != null) {
-      return DictionaryDetailPage(searchWord: searchWord);
-    } else {
-      return const AppStartPage();
-    }
+    return DictionaryDetailPage(searchWord: searchWord);
   }
 }
 

@@ -108,7 +108,7 @@ extension $SignUpRouteExtension on SignUpRoute {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'cf2f0ff855a777163529a8a4cd77bcc23078cb95';
+String _$routerHash() => r'7197a1220776cde37102ab4e4be065c207882180';
 
 /// See also [router].
 @ProviderFor(router)
