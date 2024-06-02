@@ -182,7 +182,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    hintText: '調べたい単語やフレーズを入力してください。',
+                    hintText: '調べたい単語を入力してください。',
                     alignLabelWithHint: true,
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
@@ -220,7 +220,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _searchBoxTitle(BuildContext context,) {
     return TextWidget.titleRedLargestBold(
-      'インドネシア語でも日本語でも入力できます♪',);
+      '調べたいインドネシア語を入力♪',);
   }
 
   Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {
@@ -235,26 +235,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _searchedWord(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
     return WordDetailCardWide(entity: state.searchedWord);
-  }
-
-  Widget _includedWordArea(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(translateNotifierProvider);
-    return MasonryGridView.count(
-      crossAxisCount: _gridCount(context),
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(16),
-      itemCount: state.isLoadingWordList && state.includedWords.isEmpty
-          ? 4 : state.includedWords.length,
-      itemBuilder: (context, index) {
-        return WordDetailCard(
-            entity: state.includedWords.isEmpty
-                ? null : state.includedWords[index],
-        );
-      },
-    );
   }
 
   int _gridCount(BuildContext context) {

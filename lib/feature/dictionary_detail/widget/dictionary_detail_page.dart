@@ -131,6 +131,8 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
             _searchBoxArea(context, ref),
             const SizedBox(height: 12,),
             _searchedWord(context, ref),
+            const SizedBox(height: 12,),
+            _relatedWordArea(context, ref),
           ],
         ),
       ),
@@ -180,7 +182,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    hintText: '調べたい単語やフレーズを入力してください。',
+                    hintText: '調べたい単語を入力してください。',
                     alignLabelWithHint: true,
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
@@ -227,7 +229,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
     return WordDetailCardWide(entity: state.searchedWord);
   }
 
-  Widget _includedWordArea(BuildContext context, WidgetRef ref) {
+  Widget _relatedWordArea(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
     return MasonryGridView.count(
       crossAxisCount: _gridCount(context),
@@ -236,12 +238,12 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.all(16),
-      itemCount: state.isLoadingWordList && state.includedWords.isEmpty
-          ? 4 : state.includedWords.length,
+      itemCount: state.isLoadingWordList && state.relatedWords.isEmpty
+          ? 4 : state.relatedWords.length,
       itemBuilder: (context, index) {
         return WordDetailCard(
-            entity: state.includedWords.isEmpty
-                ? null : state.includedWords[index],
+            entity: state.relatedWords.isEmpty
+                ? null : state.relatedWords[index],
         );
       },
     );

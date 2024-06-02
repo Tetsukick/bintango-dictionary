@@ -24,17 +24,6 @@ class TranslateNotifier extends _$TranslateNotifier {
   Future<void> updateInputText(String text) async {
     state.inputtedText = text;
     state = state.copyWith();
-
-    // await Future.delayed(const Duration(seconds: 2));
-    // if (state.inputtedText == text && state.inputtedText.length >= 3) {
-    //   FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
-    //   await searchWord();
-    //   // unawaited(searchIncludedWords());
-    // }
-    // await Future.delayed(const Duration(seconds: 2));
-    // if (state.inputtedText == text && state.inputtedText.length >= 3) {
-    //   await getDetailExplanation();
-    // }
   }
 
   Future<void> searchWithWord(String text) async {
@@ -52,6 +41,7 @@ class TranslateNotifier extends _$TranslateNotifier {
     final response = await _translateProvider.searchWord(state.inputtedText,);
     if (response != null) {
       state.searchedWord = response;
+      unawaited(searchRelatedWords());
     }
     state.isLoading = false;
     state = state.copyWith();
@@ -72,16 +62,17 @@ class TranslateNotifier extends _$TranslateNotifier {
     // }
   }
 
-  Future<void> searchIncludedWords() async {
-    // state.isLoadingWordList = true;
-    // state = state.copyWith();
-    // final includedWordList =
-    //   await _translateProvider.searchIncludeWords(
-    //       state.isLanguageSourceJapanese
-    //           ? state.translateResponse?.text ?? '' : state.inputtedText,);
-    // state
-    //   ..includedWords = includedWordList
-    //   ..isLoadingWordList = false;
-    // state = state.copyWith();
+  Future<void> searchRelatedWords() async {
+    if (state.searchedWord != null && state!.searchedWord?.description != null
+        && state!.searchedWord!.description!.isNotEmpty) {
+      state.isLoadingWordList = true;
+      state = state.copyWith();
+      final relatedWordList =
+      await _translateProvider.searchRelatedWords(state.searchedWord!);
+      state
+        ..relatedWords = relatedWordList
+        ..isLoadingWordList = false;
+      state = state.copyWith();
+    }
   }
 }

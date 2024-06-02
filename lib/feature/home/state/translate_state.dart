@@ -13,7 +13,7 @@ class TranslateState with _$TranslateState {
     @Default(false) bool isLanguageSourceJapanese,
     @Default('') String inputtedText,
     TranslateResponse? getDetailExplanationResponse,
-    @Default([]) List<TangoEntity> includedWords,
+    @Default([]) List<TangoEntity> relatedWords,
     @Default(null) TangoEntity? searchedWord,
   }) = _TranslateState;
 }

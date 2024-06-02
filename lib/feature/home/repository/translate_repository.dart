@@ -158,6 +158,42 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     return searchedWord;
   }
 
+  Future<List<TangoEntity>> searchRelatedWords(TangoEntity entity) async {
+    final relatedWords = <TangoEntity>[];
+    if (entity.description == null || entity.description!.isEmpty) {
+      return relatedWords;
+    }
+    final regExpForSpaceAndNewlines = RegExp(r'[\s\n]');
+    final wordList = extractIndonesianWords(entity.description!);
+    final regExpOfNyaMuKu = RegExp(r'(nya|ku|mu)$');
+    for (var i = 0; i < wordList.length; i++) {
+      final searchText = wordList[i];
+      if (searchText.contains(regExpOfNyaMuKu)) {
+        final replacedSearchText =
+        searchText.replaceAll(regExpOfNyaMuKu, '');
+        if (relatedWords
+            .firstWhereOrNull((e) => e.indonesian == replacedSearchText) != null) {
+          continue;
+        }
+        relatedWords.addAll(
+          await search(replacedSearchText),);
+      }
+      if (relatedWords
+          .firstWhereOrNull((e) => e.indonesian == searchText) != null) {
+        continue;
+      }
+      relatedWords.addAll(await search(searchText));
+    }
+    return relatedWords;
+  }
+
+  List<String> extractIndonesianWords(String text) {
+    final indonesianWordPattern = RegExp(r'\b[a-zA-Z]+\b');
+    final matches = indonesianWordPattern.allMatches(text);
+    final indonesianWords = matches.map((match) => match.group(0)!).toList();
+    return indonesianWords;
+  }
+
   Future<List<TangoEntity>> searchIncludeWords(String value) async {
     final includedWords = <TangoEntity>[];
     final regExpForSpaceAndNewlines = RegExp(r'[\s\n]');

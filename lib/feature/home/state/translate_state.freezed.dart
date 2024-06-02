@@ -32,8 +32,8 @@ mixin _$TranslateState {
       throw _privateConstructorUsedError;
   set getDetailExplanationResponse(TranslateResponse? value) =>
       throw _privateConstructorUsedError;
-  List<TangoEntity> get includedWords => throw _privateConstructorUsedError;
-  set includedWords(List<TangoEntity> value) =>
+  List<TangoEntity> get relatedWords => throw _privateConstructorUsedError;
+  set relatedWords(List<TangoEntity> value) =>
       throw _privateConstructorUsedError;
   TangoEntity? get searchedWord => throw _privateConstructorUsedError;
   set searchedWord(TangoEntity? value) => throw _privateConstructorUsedError;
@@ -56,7 +56,7 @@ abstract class $TranslateStateCopyWith<$Res> {
       bool isLanguageSourceJapanese,
       String inputtedText,
       TranslateResponse? getDetailExplanationResponse,
-      List<TangoEntity> includedWords,
+      List<TangoEntity> relatedWords,
       TangoEntity? searchedWord});
 
   $TranslateResponseCopyWith<$Res>? get getDetailExplanationResponse;
@@ -82,7 +82,7 @@ class _$TranslateStateCopyWithImpl<$Res, $Val extends TranslateState>
     Object? isLanguageSourceJapanese = null,
     Object? inputtedText = null,
     Object? getDetailExplanationResponse = freezed,
-    Object? includedWords = null,
+    Object? relatedWords = null,
     Object? searchedWord = freezed,
   }) {
     return _then(_value.copyWith(
@@ -110,9 +110,9 @@ class _$TranslateStateCopyWithImpl<$Res, $Val extends TranslateState>
           ? _value.getDetailExplanationResponse
           : getDetailExplanationResponse // ignore: cast_nullable_to_non_nullable
               as TranslateResponse?,
-      includedWords: null == includedWords
-          ? _value.includedWords
-          : includedWords // ignore: cast_nullable_to_non_nullable
+      relatedWords: null == relatedWords
+          ? _value.relatedWords
+          : relatedWords // ignore: cast_nullable_to_non_nullable
               as List<TangoEntity>,
       searchedWord: freezed == searchedWord
           ? _value.searchedWord
@@ -163,7 +163,7 @@ abstract class _$$TranslateStateImplCopyWith<$Res>
       bool isLanguageSourceJapanese,
       String inputtedText,
       TranslateResponse? getDetailExplanationResponse,
-      List<TangoEntity> includedWords,
+      List<TangoEntity> relatedWords,
       TangoEntity? searchedWord});
 
   @override
@@ -189,7 +189,7 @@ class __$$TranslateStateImplCopyWithImpl<$Res>
     Object? isLanguageSourceJapanese = null,
     Object? inputtedText = null,
     Object? getDetailExplanationResponse = freezed,
-    Object? includedWords = null,
+    Object? relatedWords = null,
     Object? searchedWord = freezed,
   }) {
     return _then(_$TranslateStateImpl(
@@ -217,9 +217,9 @@ class __$$TranslateStateImplCopyWithImpl<$Res>
           ? _value.getDetailExplanationResponse
           : getDetailExplanationResponse // ignore: cast_nullable_to_non_nullable
               as TranslateResponse?,
-      includedWords: null == includedWords
-          ? _value.includedWords
-          : includedWords // ignore: cast_nullable_to_non_nullable
+      relatedWords: null == relatedWords
+          ? _value.relatedWords
+          : relatedWords // ignore: cast_nullable_to_non_nullable
               as List<TangoEntity>,
       searchedWord: freezed == searchedWord
           ? _value.searchedWord
@@ -239,7 +239,7 @@ class _$TranslateStateImpl implements _TranslateState {
       this.isLanguageSourceJapanese = false,
       this.inputtedText = '',
       this.getDetailExplanationResponse,
-      this.includedWords = const [],
+      this.relatedWords = const [],
       this.searchedWord = null});
 
   @override
@@ -261,14 +261,14 @@ class _$TranslateStateImpl implements _TranslateState {
   TranslateResponse? getDetailExplanationResponse;
   @override
   @JsonKey()
-  List<TangoEntity> includedWords;
+  List<TangoEntity> relatedWords;
   @override
   @JsonKey()
   TangoEntity? searchedWord;
 
   @override
   String toString() {
-    return 'TranslateState(isLoading: $isLoading, isLoadingGrammarExplanation: $isLoadingGrammarExplanation, isLoadingWordList: $isLoadingWordList, isLanguageSourceJapanese: $isLanguageSourceJapanese, inputtedText: $inputtedText, getDetailExplanationResponse: $getDetailExplanationResponse, includedWords: $includedWords, searchedWord: $searchedWord)';
+    return 'TranslateState(isLoading: $isLoading, isLoadingGrammarExplanation: $isLoadingGrammarExplanation, isLoadingWordList: $isLoadingWordList, isLanguageSourceJapanese: $isLanguageSourceJapanese, inputtedText: $inputtedText, getDetailExplanationResponse: $getDetailExplanationResponse, relatedWords: $relatedWords, searchedWord: $searchedWord)';
   }
 
   @JsonKey(ignore: true)
@@ -287,7 +287,7 @@ abstract class _TranslateState implements TranslateState {
       bool isLanguageSourceJapanese,
       String inputtedText,
       TranslateResponse? getDetailExplanationResponse,
-      List<TangoEntity> includedWords,
+      List<TangoEntity> relatedWords,
       TangoEntity? searchedWord}) = _$TranslateStateImpl;
 
   @override
@@ -309,8 +309,8 @@ abstract class _TranslateState implements TranslateState {
   TranslateResponse? get getDetailExplanationResponse;
   set getDetailExplanationResponse(TranslateResponse? value);
   @override
-  List<TangoEntity> get includedWords;
-  set includedWords(List<TangoEntity> value);
+  List<TangoEntity> get relatedWords;
+  set relatedWords(List<TangoEntity> value);
   @override
   TangoEntity? get searchedWord;
   set searchedWord(TangoEntity? value);
