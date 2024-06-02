@@ -186,6 +186,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                       icon: const Icon(Icons.clear),
                       onPressed: _inputController.clear,
                     ),
+                    counterText: '',
                   ),
                   onChanged: notifier.updateInputText,
                 ),
