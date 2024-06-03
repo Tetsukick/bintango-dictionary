@@ -260,6 +260,19 @@ class TextWidget {
     );
   }
 
+  static Widget titleBlueSmallNotSelectable(String data, {int maxLines = 1}) {
+    return AutoSizeText(
+      data,
+      maxLines: maxLines,
+      minFontSize: 9,
+      maxFontSize: 16,
+      style: const TextStyle(
+        color: Colors.blueAccent,
+        fontSize: 14,
+      ),
+    );
+  }
+
   static Widget titleWhiteLargeBold(String data, {int maxLines = 1}) {
     return SelectionArea(
       child: AutoSizeText(

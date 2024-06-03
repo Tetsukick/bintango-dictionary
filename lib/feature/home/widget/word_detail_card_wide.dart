@@ -4,6 +4,7 @@ import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_p
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/animation.dart';
+import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/skeleton.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +115,8 @@ class WordDetailCardWide extends ConsumerWidget {
             _descriptionHeader(entity),
             const SizedBox(height: 8),
             _description(entity),
+            const SizedBox(height: 8),
+            _searchInKBBI(entity),
             const SizedBox(height: 8),
           ],
         ),
@@ -234,6 +237,18 @@ class WordDetailCardWide extends ConsumerWidget {
           Flexible(child: TextWidget.titleGraySmallBold(entity.description ?? '', maxLines: 10)),
         ],
       ),
+    );
+  }
+
+  Widget _searchInKBBI(TangoEntity entity) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.blueAccent,
+      ),
+      onPressed: () {
+        launch('https://kbbi.kemdikbud.go.id/entri/${entity.indonesian}');
+      },
+      child: TextWidget.titleBlueSmallNotSelectable('KBBIで『${entity.indonesian}』を調べる。(外部リンクへ遷移します。)'),
     );
   }
 
