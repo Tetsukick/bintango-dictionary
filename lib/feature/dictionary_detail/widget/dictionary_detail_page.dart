@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:html' as html;
 
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
@@ -38,7 +38,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   void initState() {
     super.initState();
     // FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BThome);
-    final loading = querySelector('.loading') as DivElement?;
+    final loading = html.querySelector('.loading') as html.DivElement?;
     if (loading != null) loading.remove();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref.watch(translateNotifierProvider.notifier)
@@ -123,6 +123,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   }
 
   Widget _widgetContent(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(translateNotifierProvider);
     return SingleChildScrollView(
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -131,6 +132,10 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
             _searchBoxArea(context, ref),
             const SizedBox(height: 12,),
             _searchedWord(context, ref),
+            const SizedBox(height: 12,),
+            Visibility(
+              visible: state.relatedWords.isNotEmpty || state.isLoadingWordList,
+              child: _relatedWordsHeader(),),
             const SizedBox(height: 12,),
             _relatedWordArea(context, ref),
           ],
@@ -161,6 +166,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
       BuildContext context,
       WidgetRef ref,
       ) {
+    final state = ref.watch(translateNotifierProvider);
     final notifier = ref.watch(translateNotifierProvider.notifier);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +197,12 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                     counterText: '',
                   ),
                   onChanged: notifier.updateInputText,
-                  onEditingComplete: notifier.searchWord,
+                  onEditingComplete: () {
+                    notifier.searchWord();
+                    html.window.history.pushState(
+                      {}, '', DictionaryDetailRoute.path
+                        .replaceFirst(':searchWord', state.inputtedText),);
+                  },
                 ),
               ),
               ElevatedButton(
@@ -200,7 +211,12 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                   backgroundColor: ColorConstants.primaryRed900,
                   shape: const CircleBorder(),
                 ),
-                onPressed: notifier.searchWord,
+                onPressed: () {
+                  notifier.searchWord();
+                  html.window.history.pushState(
+                    {}, '', DictionaryDetailRoute.path
+                      .replaceFirst(':searchWord', state.inputtedText),);
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Assets.image.search128.image(
@@ -258,5 +274,28 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
     } else {
       return 1;
     }
+  }
+
+  Widget _relatedWordsHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          TextWidget.titleGrayMedium('関連単語'),
+          Flexible(child: _separater()),
+        ],
+      ),
+    );
+  }
+
+  Widget _separater() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Container(
+        height: 1,
+        width: double.infinity,
+        color: ColorConstants.bgGreySeparater,
+      ),
+    );
   }
 }
