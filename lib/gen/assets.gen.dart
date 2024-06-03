@@ -111,11 +111,14 @@ class $AssetsLangGen {
 class $AssetsLottieGen {
   const $AssetsLottieGen();
 
+  /// File path: assets/lottie/no_data.json
+  String get noData => 'assets/lottie/no_data.json';
+
   /// File path: assets/lottie/not_found_404.json
   String get notFound404 => 'assets/lottie/not_found_404.json';
 
   /// List of all assets
-  List<String> get values => [notFound404];
+  List<String> get values => [noData, notFound404];
 }
 
 class Assets {

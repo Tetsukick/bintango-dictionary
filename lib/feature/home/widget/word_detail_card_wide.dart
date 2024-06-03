@@ -10,6 +10,7 @@ import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:highlight_text/highlight_text.dart';
+import 'package:lottie/lottie.dart';
 
 class WordDetailCardWide extends ConsumerWidget {
   const WordDetailCardWide({required this.entity, super.key});
@@ -31,6 +32,22 @@ class WordDetailCardWide extends ConsumerWidget {
       }
     } else {
       if (entity == null) {
+        if (state.inputtedText != null && state.inputtedText.isNotEmpty) {
+          return Column(
+            children: [
+              Lottie.asset(
+                'assets/lottie/no_data.json',
+                height: 300,
+              ),
+              TextWidget.titleGraySmallBold(
+                '申し訳ありません。。。\n『${state.inputtedText}』は、BINTANGOに登録されていないデータです。\n今後登録データを更新していく予定です。',
+                maxLines: 10,
+              ),
+              const SizedBox(height: 8,),
+              _searchInKBBI(state.inputtedText),
+            ],
+          );
+        }
         return const SizedBox.shrink();
       }
       return wordCard(context, entity!).amShimmer;
@@ -116,7 +133,7 @@ class WordDetailCardWide extends ConsumerWidget {
             const SizedBox(height: 8),
             _description(entity),
             const SizedBox(height: 8),
-            _searchInKBBI(entity),
+            _searchInKBBI(entity.indonesian),
             const SizedBox(height: 8),
           ],
         ),
@@ -240,15 +257,15 @@ class WordDetailCardWide extends ConsumerWidget {
     );
   }
 
-  Widget _searchInKBBI(TangoEntity entity) {
+  Widget _searchInKBBI(String searchWord) {
     return TextButton(
       style: TextButton.styleFrom(
         foregroundColor: Colors.blueAccent,
       ),
       onPressed: () {
-        launch('https://kbbi.kemdikbud.go.id/entri/${entity.indonesian}');
+        launch('https://kbbi.kemdikbud.go.id/entri/$searchWord');
       },
-      child: TextWidget.titleBlueSmallNotSelectable('KBBIで『${entity.indonesian}』を調べる。(外部リンクへ遷移します。)'),
+      child: TextWidget.titleBlueSmallNotSelectable('KBBIで『$searchWord』を調べる。(外部リンクへ遷移します。)'),
     );
   }
 

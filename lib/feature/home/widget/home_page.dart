@@ -126,8 +126,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Column(
           children: [
             _searchBoxArea(context, ref),
-            const SizedBox(height: 12,),
-            _searchedWord(context, ref),
           ],
         ),
       ),
@@ -227,10 +225,5 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _searchBoxTitle(BuildContext context,) {
     return TextWidget.titleRedLargestBold(
       '調べたいインドネシア語を入力♪',);
-  }
-
-  Widget _searchedWord(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(translateNotifierProvider);
-    return WordDetailCardWide(entity: state.searchedWord);
   }
 }
