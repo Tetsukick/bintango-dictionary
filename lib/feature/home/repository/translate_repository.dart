@@ -1,14 +1,16 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:bintango_indonesian_dictionary/feature/home/model/tango_entity.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/model/translate_response.dart';
+import 'package:bintango_indonesian_dictionary/feature/home/model/unregistered_tango_entity.dart';
+import 'package:bintango_indonesian_dictionary/shared/http/api_provider.dart';
+import 'package:bintango_indonesian_dictionary/shared/http/api_response.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bintango_indonesian_dictionary/shared/http/api_provider.dart';
-import 'package:bintango_indonesian_dictionary/shared/http/api_response.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class TranslateRepositoryProtocol {
@@ -155,7 +157,89 @@ class TranslateRepository implements TranslateRepositoryProtocol {
         }
       }
     }
+    if (searchedWord == null) {
+      unawaited(registerUnregisteredWord(value));
+    }
     return searchedWord;
+  }
+
+  Future<void> registerUnregisteredWord(String unregisteredIndonesian) async {
+    final searchText = unregisteredIndonesian.toLowerCase()
+        .replaceAll('.', '')
+        .replaceAll(',', '')
+        .replaceAll('\n', '');
+    final unregisteredTangoEntity = await getUnregisteredWordData(text: searchText);
+    try {
+      await Supabase.instance.client.from('unregistered_words').insert(unregisteredTangoEntity.toJson(), defaultToNull: true);
+    } catch (e) {
+      dev.log(e.toString());
+    }
+  }
+
+  Future<UnregisteredTangoEntity> getUnregisteredWordData({
+    required String text,
+  }) async {
+    final prompt =
+    '''
+    インドネシア語の「$text」について以下のデータを指定するjson形式で出力してください。
+    
+    - 該当する日本語(複数ある場合は","つなぎで出力)
+    - 該当する英語(複数ある場合は","つなぎで出力)
+    - 「$text」を使用したインドネシア語の例文(126字以内)
+    - 上記のインドネシア語の例文の日本語訳
+    - 「$text」に関連した同義語や反意語、その他関連語(複数ある場合は","つなぎで出力)
+    
+    出力json形式
+    ```
+    {
+      "indonesian": "terdiam",
+      "japanese": 該当する日本語,
+      "english": 該当する英語,
+      "example": 「$text」を使用したインドネシア語の例文,
+      "example_jp": 上記のインドネシア語の例文の日本語訳,
+      "description": 「$text」に関連した同義語や反意語、その他関連語
+    }
+    ```
+    '''
+    ;
+
+    final queryParams = {
+      'key': dotenv.env['GEMINI_API_KEY'],
+    };
+    final body =
+    {
+      'contents': [
+        {'role': 'user', 'parts': { 'text': prompt }},
+      ],
+    };
+
+    final response = await _api.post('/gemini-pro:generateContent', json.encode(body) , query: queryParams,);
+
+    response.when(
+      success: (success) {
+        dev.log(success.toString());
+      },
+      error: (error) {
+        return APIResponse.error(error);
+      },);
+
+    if (response is APISuccess) {
+      final value = response.value as Map<String, dynamic>;
+      try {
+        final response = value['candidates'][0]['content']['parts'][0]['text'] as String;
+        final convertedMap = convertToJsonMap(response);
+        final unregisteredTangoEntity =
+          UnregisteredTangoEntity.fromJson(convertedMap);
+
+        return unregisteredTangoEntity;
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else if (response is APIError) {
+      throw Exception(response.exception);
+    } else {
+      throw Exception('timeout');
+    }
   }
 
   Future<List<TangoEntity>> searchRelatedWords(TangoEntity entity) async {
@@ -242,5 +326,14 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     final searchWordList =
       searchWordJsonList.map(TangoEntity.fromJson).toList();
     return searchWordList;
+  }
+
+  Map<String, dynamic> convertToJsonMap(String jsonString) {
+    jsonString = jsonString
+        .replaceAll("'", '"')
+        .replaceAll('`', '')
+        .replaceAll('json', '')
+        .replaceAll('\n', '');
+    return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 }
