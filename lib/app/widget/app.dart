@@ -11,7 +11,7 @@ class App extends ConsumerWidget {
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      title: 'Bintango Dictionary | AIでインドネシア語翻訳と同時に一括単語検索',
+      title: 'BINTANGO DICTIONARY | 全単語例文付きのオンラインインドネシア語辞書',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),

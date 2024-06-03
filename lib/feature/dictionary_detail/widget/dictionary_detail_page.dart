@@ -15,6 +15,7 @@ import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:meta_seo/meta_seo.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class DictionaryDetailPage extends ConsumerStatefulWidget {
@@ -43,6 +44,8 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref.watch(translateNotifierProvider.notifier)
           .searchWithWord(widget.searchWord);
+      final state = ref.watch(translateNotifierProvider);
+      updateMetaInfo();
     });
   }
 
@@ -50,7 +53,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   Widget build(BuildContext context) {
     return Title(
       color: ColorConstants.bgPinkColor,
-      title: 'Bintango Dictionary | インドネシア語と日本語の辞書 和尼辞書&尼和辞書',
+      title: '『${widget.searchWord}』の意味をインドネシア語辞書で検索 | BINTANGO DICTIONARY',
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 80,
@@ -197,12 +200,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                     counterText: '',
                   ),
                   onChanged: notifier.updateInputText,
-                  onEditingComplete: () {
-                    notifier.searchWord();
-                    html.window.history.pushState(
-                      {}, '', DictionaryDetailRoute.path
-                        .replaceFirst(':searchWord', state.inputtedText),);
-                  },
+                  onEditingComplete: search,
                 ),
               ),
               ElevatedButton(
@@ -211,12 +209,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                   backgroundColor: ColorConstants.primaryRed900,
                   shape: const CircleBorder(),
                 ),
-                onPressed: () {
-                  notifier.searchWord();
-                  html.window.history.pushState(
-                    {}, '', DictionaryDetailRoute.path
-                      .replaceFirst(':searchWord', state.inputtedText),);
-                },
+                onPressed: search,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Assets.image.search128.image(
@@ -230,6 +223,24 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
         ),
       ],
     );
+  }
+
+  Future<void> search() async {
+    final notifier = ref.watch(translateNotifierProvider.notifier);
+    final state = ref.watch(translateNotifierProvider);
+    await notifier.searchWord();
+    setState(() => widget.searchWord = state.inputtedText);
+    html.window.history.pushState(
+      {}, '', DictionaryDetailRoute.path
+        .replaceFirst(':searchWord', state.inputtedText),);
+    updateMetaInfo();
+  }
+
+  void updateMetaInfo() {
+    final state = ref.watch(translateNotifierProvider);
+    final meta = MetaSEO();
+    meta.description(description: '『${widget.searchWord}』は、日本語で、『${state.searchedWord?.japanese ?? ''}』を意味します。英語では、『${state.searchedWord?.english ?? ''}』を意味します。');
+    meta.keywords(keywords: 'インドネシア語, インドネシア語辞書, インドネシア語学習, インドネシア語勉強, ${widget.searchWord}, ${state.searchedWord?.japanese}, ${state.searchedWord?.japanese}');
   }
 
   Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {

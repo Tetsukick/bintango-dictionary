@@ -3,7 +3,6 @@ import 'dart:html';
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/widget/explanation_detail_card.dart';
-import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card_wide.dart';
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
@@ -12,7 +11,6 @@ import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -42,7 +40,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Title(
       color: ColorConstants.bgPinkColor,
-      title: 'Bintango Dictionary | インドネシア語と日本語の辞書 和尼辞書&尼和辞書',
+      title: 'BINTANGO DICTIONARY | 全単語例文付きのオンラインインドネシア語辞書',
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
@@ -228,27 +226,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       '調べたいインドネシア語を入力♪',);
   }
 
-  Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(translateNotifierProvider);
-    if (state.getDetailExplanationResponse != null) {
-      return ExplanationDetailCard(data: state.getDetailExplanationResponse!);
-    } else {
-      return const SizedBox.shrink();
-    }
-  }
-
   Widget _searchedWord(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
     return WordDetailCardWide(entity: state.searchedWord);
-  }
-
-  int _gridCount(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).largerThan(TABLET)) {
-      return 4;
-    } else if (ResponsiveBreakpoints.of(context).largerThan(MOBILE)) {
-      return 2;
-    } else {
-      return 1;
-    }
   }
 }
