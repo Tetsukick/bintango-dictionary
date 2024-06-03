@@ -1,8 +1,9 @@
 enum AnalyticsScreen {
-  BTsignIn,
-  BTsignUp,
+  BDsignIn,
+  BDsignUp,
 
-  BThome,
+  BDhome,
+  BDdictionaryDetail,
 }
 
 extension AnalyticsScreenExt on AnalyticsScreen {
@@ -25,7 +26,7 @@ enum SignInItem with AnalyticsItem {
   goSignUp;
 
   @override
-  AnalyticsScreen get screen => AnalyticsScreen.BTsignIn;
+  AnalyticsScreen get screen => AnalyticsScreen.BDsignIn;
 }
 
 enum SignUpItem with AnalyticsItem {
@@ -34,13 +35,19 @@ enum SignUpItem with AnalyticsItem {
   goSignIn;
 
   @override
-  AnalyticsScreen get screen => AnalyticsScreen.BTsignUp;
+  AnalyticsScreen get screen => AnalyticsScreen.BDsignUp;
 }
 
 enum HomeItem with AnalyticsItem {
-  search,
-  copy;
+  search;
 
   @override
-  AnalyticsScreen get screen => AnalyticsScreen.BThome;
+  AnalyticsScreen get screen => AnalyticsScreen.BDhome;
+}
+
+enum DictionaryDetailItem with AnalyticsItem {
+  search;
+
+  @override
+  AnalyticsScreen get screen => AnalyticsScreen.BDdictionaryDetail;
 }

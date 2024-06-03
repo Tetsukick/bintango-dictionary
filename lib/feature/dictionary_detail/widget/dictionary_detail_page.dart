@@ -38,7 +38,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   @override
   void initState() {
     super.initState();
-    // FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BThome);
+    FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BDdictionaryDetail);
     final loading = html.querySelector('.loading') as html.DivElement?;
     if (loading != null) loading.remove();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -226,6 +226,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   }
 
   Future<void> search() async {
+    FirebaseAnalyticsUtils.eventsTrack(DictionaryDetailItem.search);
     final notifier = ref.watch(translateNotifierProvider.notifier);
     final state = ref.watch(translateNotifierProvider);
     await notifier.searchWord();

@@ -7,6 +7,8 @@ import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_c
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
 import 'package:bintango_indonesian_dictionary/shared/route/app_router.dart';
+import 'package:bintango_indonesian_dictionary/shared/util/analytics/analytics_parameters.dart';
+import 'package:bintango_indonesian_dictionary/shared/util/analytics/firebase_analytics.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    // FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BThome);
+    FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BDhome);
     final loading = querySelector('.loading') as DivElement?;
     if (loading != null) loading.remove();
   }
@@ -202,6 +204,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   shape: const CircleBorder(),
                 ),
                 onPressed: () {
+                  FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
                   ref.read(routerProvider).go(
                       DictionaryDetailRoute.path
                           .replaceFirst(':searchWord', state.inputtedText),);
