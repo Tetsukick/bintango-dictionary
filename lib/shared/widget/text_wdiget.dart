@@ -56,14 +56,16 @@ class TextWidget {
         maxLines: maxLines,
         minFontSize: 16,
         maxFontSize: 24,
-        style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: ColorConstants.fontBlack,
-            fontSize: 24,
-        ),
+        style: titleBlackLargeBoldStyle,
       ),
     );
   }
+
+  static TextStyle titleBlackLargeBoldStyle = const TextStyle(
+    fontWeight: FontWeight.bold,
+    color: ColorConstants.fontBlack,
+    fontSize: 24,
+  );
 
   static Widget titleBlackLargestBold(String data, {int maxLines = 1}) {
     return SelectionArea(

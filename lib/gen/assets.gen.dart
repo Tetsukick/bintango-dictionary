@@ -49,6 +49,10 @@ class $AssetsImageGen {
   /// File path: assets/image/home_128.png
   AssetGenImage get home128 => const AssetGenImage('assets/image/home_128.png');
 
+  /// File path: assets/image/houganshi.png
+  AssetGenImage get houganshi =>
+      const AssetGenImage('assets/image/houganshi.png');
+
   /// File path: assets/image/indonesia_64.png
   AssetGenImage get indonesia64 =>
       const AssetGenImage('assets/image/indonesia_64.png');
@@ -83,6 +87,7 @@ class $AssetsImageGen {
         english64,
         example64,
         home128,
+        houganshi,
         indonesia64,
         infoNotes,
         japan64,

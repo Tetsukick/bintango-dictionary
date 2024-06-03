@@ -8,6 +8,7 @@ import 'package:bintango_indonesian_dictionary/shared/widget/skeleton.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:highlight_text/highlight_text.dart';
 
 class WordDetailCardWide extends ConsumerWidget {
   const WordDetailCardWide({required this.entity, super.key});
@@ -36,76 +37,85 @@ class WordDetailCardWide extends ConsumerWidget {
   }
 
   Widget shimmerWordCard(BuildContext context) {
-    return Card(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 2,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const RoundedSkeleton(
-                width: 72,
-                height: 24,
-                color: ColorConstants.primaryRed900,
-              ).shimmer,
-              const SizedBox(height: 8),
-              const Skeleton(width: 88, height: 32,).shimmer,
-              const SizedBox(height: 4),
-              _separater().shimmer,
-              const Skeleton(width: 96, height: 28,).shimmer,
-              const SizedBox(height: 8),
-              const Skeleton(width: 88, height: 28,).shimmer,
-              const SizedBox(height: 8),
-              _separater().shimmer,
-              const SizedBox(height: 8),
-              const Skeleton(width: 128, height: 28,).shimmer,
-              const SizedBox(height: 8),
-              const Skeleton(width: 128, height: 28,).shimmer,
-              const SizedBox(height: 8),
-              _separater().shimmer,
-              const SizedBox(height: 8),
-              const Skeleton(width: 128, height: 18,).shimmer,
-              const SizedBox(height: 4),
-              const Skeleton(width: 106, height: 18,).shimmer,
-              const SizedBox(height: 8),
-            ],
+    return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: Assets.image.houganshi.provider(),
+            fit: BoxFit.cover,
+            opacity: 0.5
           ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const RoundedSkeleton(
+              width: 72,
+              height: 24,
+              color: ColorConstants.primaryRed900,
+            ).shimmer,
+            const SizedBox(height: 8),
+            const Skeleton(width: 88, height: 32,).shimmer,
+            const SizedBox(height: 4),
+            _separater().shimmer,
+            const Skeleton(width: 96, height: 28,).shimmer,
+            const SizedBox(height: 8),
+            const Skeleton(width: 88, height: 28,).shimmer,
+            const SizedBox(height: 8),
+            _separater().shimmer,
+            const SizedBox(height: 8),
+            const Skeleton(width: 128, height: 28,).shimmer,
+            const SizedBox(height: 8),
+            const Skeleton(width: 128, height: 28,).shimmer,
+            const SizedBox(height: 8),
+            _separater().shimmer,
+            const SizedBox(height: 8),
+            const Skeleton(width: 128, height: 18,).shimmer,
+            const SizedBox(height: 4),
+            const Skeleton(width: 106, height: 18,).shimmer,
+            const SizedBox(height: 8),
+          ],
         ),
       ),
     );
   }
 
   Widget wordCard(BuildContext context, TangoEntity entity) {
-    return Card(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 2,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _partOfSpeech(entity),
-              const SizedBox(height: 8),
-              _indonesian(entity),
-              const SizedBox(height: 4),
-              _separater(),
-              _japanese(entity),
-              const SizedBox(height: 8),
-              _english(entity),
-              const SizedBox(height: 8),
-              _exampleHeader(),
-              const SizedBox(height: 8),
-              _example(entity),
-              const SizedBox(height: 8),
-              _exampleJp(entity),
-              const SizedBox(height: 8),
-              _descriptionHeader(entity),
-              const SizedBox(height: 8),
-              _description(entity),
-              const SizedBox(height: 8),
-            ],
+    return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: Assets.image.houganshi.provider(),
+            fit: BoxFit.cover,
           ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _partOfSpeech(entity),
+            const SizedBox(height: 8),
+            _indonesian(entity),
+            const SizedBox(height: 4),
+            _separater(),
+            _japanese(entity),
+            const SizedBox(height: 8),
+            _english(entity),
+            const SizedBox(height: 8),
+            _exampleHeader(),
+            const SizedBox(height: 8),
+            _example(context, entity),
+            const SizedBox(height: 8),
+            _exampleJp(entity),
+            const SizedBox(height: 8),
+            _descriptionHeader(entity),
+            const SizedBox(height: 8),
+            _description(entity),
+            const SizedBox(height: 8),
+          ],
         ),
       ),
     );
@@ -175,13 +185,32 @@ class WordDetailCardWide extends ConsumerWidget {
     );
   }
 
-  Widget _example(TangoEntity entity) {
-    return Row(
-      children: [
-        Assets.image.example64.image(height: _iconHeight, width: _iconWidth),
-        const SizedBox(width: 12),
-        Flexible(child: TextWidget.titleBlackLargeBold(entity.example!, maxLines: 5)),
-      ],
+  Widget _example(BuildContext context, TangoEntity entity) {
+    final EdgeInsetsGeometry padding = EdgeInsets.only(left: 4, right: 4, bottom: 6);
+
+    return SelectionArea(
+      child: Row(
+        children: [
+          Assets.image.example64.image(height: _iconHeight, width: _iconWidth),
+          const SizedBox(width: 12),
+          Flexible(
+            child: TextHighlight(
+              text: entity.example!,
+              words: {
+                entity.indonesian: HighlightedWord(
+                  textStyle: TextWidget.titleBlackLargeBoldStyle,
+                  decoration: const BoxDecoration(
+                    color: Colors.yellowAccent,
+                  ),
+                  padding: padding
+                ),
+              },
+              maxLines: 10,
+              textStyle: TextWidget.titleBlackLargeBoldStyle,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -214,7 +243,7 @@ class WordDetailCardWide extends ConsumerWidget {
       child: Container(
         height: 1,
         width: double.infinity,
-        color: ColorConstants.bgGreySeparater,
+        color: ColorConstants.bgGrey.withOpacity(0.3),
       ),
     );
   }
