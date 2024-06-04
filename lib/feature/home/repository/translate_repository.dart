@@ -187,7 +187,8 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     - 該当する英語(複数ある場合は","つなぎで出力)
     - 「$text」を使用したインドネシア語の例文(126字以内)
     - 上記のインドネシア語の例文の日本語訳
-    - 「$text」に関連した同義語や反意語、その他関連語(複数ある場合は","つなぎで出力)
+    - 「$text」に関連した同義語(同義語: XXX, XXXの形式)や反意語((反意語: XXX, XXXの形式))、その他関連語(複数ある場合は","つなぎで出力)
+    - 「$text」の品詞
     
     出力json形式
     ```
@@ -198,6 +199,7 @@ class TranslateRepository implements TranslateRepositoryProtocol {
       "example": 「$text」を使用したインドネシア語の例文,
       "example_jp": 上記のインドネシア語の例文の日本語訳,
       "description": 「$text」に関連した同義語や反意語、その他関連語
+      "part_of_speech": 「$text」の品詞
     }
     ```
     '''

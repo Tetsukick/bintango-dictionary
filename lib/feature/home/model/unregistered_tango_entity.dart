@@ -13,6 +13,7 @@ class UnregisteredTangoEntity with _$UnregisteredTangoEntity {
     required String english,
     required String? example,
     @JsonKey(name: 'example_jp') required String? exampleJp,
+    @JsonKey(name: 'part_of_speech') String? partOfSpeech,
     String? description,
   }) = _UnregisteredTangoEntity;
 

@@ -28,6 +28,8 @@ mixin _$UnregisteredTangoEntity {
   String? get example => throw _privateConstructorUsedError;
   @JsonKey(name: 'example_jp')
   String? get exampleJp => throw _privateConstructorUsedError;
+  @JsonKey(name: 'part_of_speech')
+  String? get partOfSpeech => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,6 +51,7 @@ abstract class $UnregisteredTangoEntityCopyWith<$Res> {
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
+      @JsonKey(name: 'part_of_speech') String? partOfSpeech,
       String? description});
 }
 
@@ -72,6 +75,7 @@ class _$UnregisteredTangoEntityCopyWithImpl<$Res,
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
+    Object? partOfSpeech = freezed,
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
@@ -99,6 +103,10 @@ class _$UnregisteredTangoEntityCopyWithImpl<$Res,
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
+      partOfSpeech: freezed == partOfSpeech
+          ? _value.partOfSpeech
+          : partOfSpeech // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -123,6 +131,7 @@ abstract class _$$UnregisteredTangoEntityImplCopyWith<$Res>
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
+      @JsonKey(name: 'part_of_speech') String? partOfSpeech,
       String? description});
 }
 
@@ -145,6 +154,7 @@ class __$$UnregisteredTangoEntityImplCopyWithImpl<$Res>
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
+    Object? partOfSpeech = freezed,
     Object? description = freezed,
   }) {
     return _then(_$UnregisteredTangoEntityImpl(
@@ -172,6 +182,10 @@ class __$$UnregisteredTangoEntityImplCopyWithImpl<$Res>
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
+      partOfSpeech: freezed == partOfSpeech
+          ? _value.partOfSpeech
+          : partOfSpeech // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -190,6 +204,7 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
       required this.english,
       required this.example,
       @JsonKey(name: 'example_jp') required this.exampleJp,
+      @JsonKey(name: 'part_of_speech') this.partOfSpeech,
       this.description});
 
   factory _$UnregisteredTangoEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -209,11 +224,14 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
   @JsonKey(name: 'example_jp')
   final String? exampleJp;
   @override
+  @JsonKey(name: 'part_of_speech')
+  final String? partOfSpeech;
+  @override
   final String? description;
 
   @override
   String toString() {
-    return 'UnregisteredTangoEntity(id: $id, indonesian: $indonesian, japanese: $japanese, english: $english, example: $example, exampleJp: $exampleJp, description: $description)';
+    return 'UnregisteredTangoEntity(id: $id, indonesian: $indonesian, japanese: $japanese, english: $english, example: $example, exampleJp: $exampleJp, partOfSpeech: $partOfSpeech, description: $description)';
   }
 
   @override
@@ -230,6 +248,8 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
             (identical(other.example, example) || other.example == example) &&
             (identical(other.exampleJp, exampleJp) ||
                 other.exampleJp == exampleJp) &&
+            (identical(other.partOfSpeech, partOfSpeech) ||
+                other.partOfSpeech == partOfSpeech) &&
             (identical(other.description, description) ||
                 other.description == description));
   }
@@ -237,7 +257,7 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, indonesian, japanese,
-      english, example, exampleJp, description);
+      english, example, exampleJp, partOfSpeech, description);
 
   @JsonKey(ignore: true)
   @override
@@ -262,6 +282,7 @@ abstract class _UnregisteredTangoEntity implements UnregisteredTangoEntity {
       required final String english,
       required final String? example,
       @JsonKey(name: 'example_jp') required final String? exampleJp,
+      @JsonKey(name: 'part_of_speech') final String? partOfSpeech,
       final String? description}) = _$UnregisteredTangoEntityImpl;
 
   factory _UnregisteredTangoEntity.fromJson(Map<String, dynamic> json) =
@@ -280,6 +301,9 @@ abstract class _UnregisteredTangoEntity implements UnregisteredTangoEntity {
   @override
   @JsonKey(name: 'example_jp')
   String? get exampleJp;
+  @override
+  @JsonKey(name: 'part_of_speech')
+  String? get partOfSpeech;
   @override
   String? get description;
   @override

@@ -15,6 +15,7 @@ _$UnregisteredTangoEntityImpl _$$UnregisteredTangoEntityImplFromJson(
       english: json['english'] as String,
       example: json['example'] as String?,
       exampleJp: json['example_jp'] as String?,
+      partOfSpeech: json['part_of_speech'] as String?,
       description: json['description'] as String?,
     );
 
@@ -27,5 +28,6 @@ Map<String, dynamic> _$$UnregisteredTangoEntityImplToJson(
       'english': instance.english,
       'example': instance.example,
       'example_jp': instance.exampleJp,
+      'part_of_speech': instance.partOfSpeech,
       'description': instance.description,
     };
