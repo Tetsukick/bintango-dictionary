@@ -2,8 +2,6 @@ import 'dart:html';
 
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
-import 'package:bintango_indonesian_dictionary/feature/home/widget/explanation_detail_card.dart';
-import 'package:bintango_indonesian_dictionary/feature/home/widget/word_detail_card_wide.dart';
 import 'package:bintango_indonesian_dictionary/gen/assets.gen.dart';
 import 'package:bintango_indonesian_dictionary/shared/constants/color_constants.dart';
 import 'package:bintango_indonesian_dictionary/shared/route/app_router.dart';

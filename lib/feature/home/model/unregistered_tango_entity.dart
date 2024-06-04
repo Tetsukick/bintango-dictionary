@@ -6,18 +6,13 @@ part 'unregistered_tango_entity.g.dart';
 
 @freezed
 abstract class UnregisteredTangoEntity implements _$UnregisteredTangoEntity {
-  const UnregisteredTangoEntity._();
 
   const factory UnregisteredTangoEntity({
-    int? id,
-    required String indonesian,
-    required String japanese,
-    required String english,
-    required String? example,
-    @JsonKey(name: 'example_jp') required String? exampleJp,
+    required String indonesian, required String japanese, required String english, required String? example, @JsonKey(name: 'example_jp') required String? exampleJp, int? id,
     @JsonKey(name: 'part_of_speech') String? partOfSpeech,
     String? description,
   }) = _UnregisteredTangoEntity;
+  const UnregisteredTangoEntity._();
 
   factory UnregisteredTangoEntity.fromJson(Map<String, dynamic> json) =>
       _$UnregisteredTangoEntityFromJson(json);

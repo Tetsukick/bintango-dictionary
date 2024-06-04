@@ -8,12 +8,12 @@ part of 'tango_entity.dart';
 
 _$TangoEntityImpl _$$TangoEntityImplFromJson(Map<String, dynamic> json) =>
     _$TangoEntityImpl(
-      id: (json['id'] as num?)?.toInt(),
       indonesian: json['indonesian'] as String,
       japanese: json['japanese'] as String,
       english: json['english'] as String,
       example: json['example'] as String?,
       exampleJp: json['example_jp'] as String?,
+      id: (json['id'] as num?)?.toInt(),
       level: (json['level'] as num?)?.toInt(),
       partOfSpeech: (json['part_of_speech'] as num?)?.toInt(),
       description: json['description'] as String?,
@@ -24,12 +24,12 @@ _$TangoEntityImpl _$$TangoEntityImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TangoEntityImplToJson(_$TangoEntityImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'indonesian': instance.indonesian,
       'japanese': instance.japanese,
       'english': instance.english,
       'example': instance.example,
       'example_jp': instance.exampleJp,
+      'id': instance.id,
       'level': instance.level,
       'part_of_speech': instance.partOfSpeech,
       'description': instance.description,

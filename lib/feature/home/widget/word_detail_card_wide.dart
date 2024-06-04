@@ -33,7 +33,7 @@ class WordDetailCardWide extends ConsumerWidget {
       }
     } else {
       if (entity == null) {
-        if (state.inputtedText != null && state.inputtedText.isNotEmpty) {
+        if (state.inputtedText.isNotEmpty) {
           return Column(
             children: [
               Lottie.asset(
@@ -64,7 +64,7 @@ class WordDetailCardWide extends ConsumerWidget {
           image: DecorationImage(
             image: Assets.image.houganshi.provider(),
             fit: BoxFit.cover,
-            opacity: 0.5
+            opacity: 0.5,
           ),
       ),
       child: Padding(
@@ -214,7 +214,7 @@ class WordDetailCardWide extends ConsumerWidget {
   }
 
   Widget _example(BuildContext context, TangoEntity entity) {
-    final EdgeInsetsGeometry padding = EdgeInsets.only(left: 4, right: 4, bottom: 6);
+    const EdgeInsetsGeometry padding = EdgeInsets.only(left: 4, right: 4, bottom: 6);
 
     return SelectionArea(
       child: Row(
@@ -230,7 +230,7 @@ class WordDetailCardWide extends ConsumerWidget {
                   decoration: const BoxDecoration(
                     color: Colors.yellowAccent,
                   ),
-                  padding: padding
+                  padding: padding,
                 ),
               },
               maxLines: 10,

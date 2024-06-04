@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:bintango_indonesian_dictionary/feature/home/repository/translate_repository.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/state/translate_state.dart';
-import 'package:bintango_indonesian_dictionary/shared/util/analytics/analytics_parameters.dart';
-import 'package:bintango_indonesian_dictionary/shared/util/analytics/firebase_analytics.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'translate_provider.g.dart';
@@ -67,8 +65,8 @@ class TranslateNotifier extends _$TranslateNotifier {
   }
 
   Future<void> searchRelatedWords() async {
-    if (state.searchedWord != null && state!.searchedWord?.description != null
-        && state!.searchedWord!.description!.isNotEmpty) {
+    if (state.searchedWord != null && state.searchedWord?.description != null
+        && state.searchedWord!.description!.isNotEmpty) {
       state.isLoadingWordList = true;
       state = state.copyWith();
       final relatedWordList =

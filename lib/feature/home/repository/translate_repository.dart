@@ -160,7 +160,7 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     if (searchedWord == null) {
       final searchResultInUnregisteredWords =
         await searchInUnregisteredWord(value);
-      if (searchResultInUnregisteredWords == null || searchResultInUnregisteredWords.isEmpty) {
+      if (searchResultInUnregisteredWords.isEmpty) {
         unawaited(registerUnregisteredWord(value));
       } else {
         return searchResultInUnregisteredWords.first.toTangoEntity();

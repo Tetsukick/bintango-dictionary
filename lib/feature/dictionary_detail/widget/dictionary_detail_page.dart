@@ -32,8 +32,8 @@ class DictionaryDetailPage extends ConsumerStatefulWidget {
 class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
 
   final TextEditingController _inputController = TextEditingController();
-  double _iconHeight = 28;
-  double _iconWidth = 28.0;
+  final double _iconHeight = 28;
+  final double _iconWidth = 28;
 
   @override
   void initState() {
@@ -181,7 +181,6 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
                 width: (MediaQuery.of(context).size.width /

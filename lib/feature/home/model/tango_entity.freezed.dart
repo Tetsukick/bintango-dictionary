@@ -20,13 +20,13 @@ TangoEntity _$TangoEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TangoEntity {
-  int? get id => throw _privateConstructorUsedError;
   String get indonesian => throw _privateConstructorUsedError;
   String get japanese => throw _privateConstructorUsedError;
   String get english => throw _privateConstructorUsedError;
   String? get example => throw _privateConstructorUsedError;
   @JsonKey(name: 'example_jp')
   String? get exampleJp => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   int? get level => throw _privateConstructorUsedError;
   @JsonKey(name: 'part_of_speech')
   int? get partOfSpeech => throw _privateConstructorUsedError;
@@ -49,12 +49,12 @@ abstract class $TangoEntityCopyWith<$Res> {
       _$TangoEntityCopyWithImpl<$Res, TangoEntity>;
   @useResult
   $Res call(
-      {int? id,
-      String indonesian,
+      {String indonesian,
       String japanese,
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
+      int? id,
       int? level,
       @JsonKey(name: 'part_of_speech') int? partOfSpeech,
       String? description,
@@ -76,12 +76,12 @@ class _$TangoEntityCopyWithImpl<$Res, $Val extends TangoEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
     Object? indonesian = null,
     Object? japanese = null,
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
+    Object? id = freezed,
     Object? level = freezed,
     Object? partOfSpeech = freezed,
     Object? description = freezed,
@@ -90,10 +90,6 @@ class _$TangoEntityCopyWithImpl<$Res, $Val extends TangoEntity>
     Object? rankFrequency = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       indonesian: null == indonesian
           ? _value.indonesian
           : indonesian // ignore: cast_nullable_to_non_nullable
@@ -114,6 +110,10 @@ class _$TangoEntityCopyWithImpl<$Res, $Val extends TangoEntity>
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -151,12 +151,12 @@ abstract class _$$TangoEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
-      String indonesian,
+      {String indonesian,
       String japanese,
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
+      int? id,
       int? level,
       @JsonKey(name: 'part_of_speech') int? partOfSpeech,
       String? description,
@@ -176,12 +176,12 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
     Object? indonesian = null,
     Object? japanese = null,
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
+    Object? id = freezed,
     Object? level = freezed,
     Object? partOfSpeech = freezed,
     Object? description = freezed,
@@ -190,10 +190,6 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
     Object? rankFrequency = freezed,
   }) {
     return _then(_$TangoEntityImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       indonesian: null == indonesian
           ? _value.indonesian
           : indonesian // ignore: cast_nullable_to_non_nullable
@@ -214,6 +210,10 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -246,12 +246,12 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TangoEntityImpl implements _TangoEntity {
   const _$TangoEntityImpl(
-      {this.id,
-      required this.indonesian,
+      {required this.indonesian,
       required this.japanese,
       required this.english,
       required this.example,
       @JsonKey(name: 'example_jp') required this.exampleJp,
+      this.id,
       this.level,
       @JsonKey(name: 'part_of_speech') this.partOfSpeech,
       this.description,
@@ -263,8 +263,6 @@ class _$TangoEntityImpl implements _TangoEntity {
       _$$TangoEntityImplFromJson(json);
 
   @override
-  final int? id;
-  @override
   final String indonesian;
   @override
   final String japanese;
@@ -275,6 +273,8 @@ class _$TangoEntityImpl implements _TangoEntity {
   @override
   @JsonKey(name: 'example_jp')
   final String? exampleJp;
+  @override
+  final int? id;
   @override
   final int? level;
   @override
@@ -292,7 +292,7 @@ class _$TangoEntityImpl implements _TangoEntity {
 
   @override
   String toString() {
-    return 'TangoEntity(id: $id, indonesian: $indonesian, japanese: $japanese, english: $english, example: $example, exampleJp: $exampleJp, level: $level, partOfSpeech: $partOfSpeech, description: $description, category: $category, frequency: $frequency, rankFrequency: $rankFrequency)';
+    return 'TangoEntity(indonesian: $indonesian, japanese: $japanese, english: $english, example: $example, exampleJp: $exampleJp, id: $id, level: $level, partOfSpeech: $partOfSpeech, description: $description, category: $category, frequency: $frequency, rankFrequency: $rankFrequency)';
   }
 
   @override
@@ -300,7 +300,6 @@ class _$TangoEntityImpl implements _TangoEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TangoEntityImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.indonesian, indonesian) ||
                 other.indonesian == indonesian) &&
             (identical(other.japanese, japanese) ||
@@ -309,6 +308,7 @@ class _$TangoEntityImpl implements _TangoEntity {
             (identical(other.example, example) || other.example == example) &&
             (identical(other.exampleJp, exampleJp) ||
                 other.exampleJp == exampleJp) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.partOfSpeech, partOfSpeech) ||
                 other.partOfSpeech == partOfSpeech) &&
@@ -326,12 +326,12 @@ class _$TangoEntityImpl implements _TangoEntity {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
       indonesian,
       japanese,
       english,
       example,
       exampleJp,
+      id,
       level,
       partOfSpeech,
       description,
@@ -355,12 +355,12 @@ class _$TangoEntityImpl implements _TangoEntity {
 
 abstract class _TangoEntity implements TangoEntity {
   const factory _TangoEntity(
-          {final int? id,
-          required final String indonesian,
+          {required final String indonesian,
           required final String japanese,
           required final String english,
           required final String? example,
           @JsonKey(name: 'example_jp') required final String? exampleJp,
+          final int? id,
           final int? level,
           @JsonKey(name: 'part_of_speech') final int? partOfSpeech,
           final String? description,
@@ -373,8 +373,6 @@ abstract class _TangoEntity implements TangoEntity {
       _$TangoEntityImpl.fromJson;
 
   @override
-  int? get id;
-  @override
   String get indonesian;
   @override
   String get japanese;
@@ -385,6 +383,8 @@ abstract class _TangoEntity implements TangoEntity {
   @override
   @JsonKey(name: 'example_jp')
   String? get exampleJp;
+  @override
+  int? get id;
   @override
   int? get level;
   @override

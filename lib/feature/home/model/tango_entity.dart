@@ -7,12 +7,7 @@ part 'tango_entity.g.dart';
 class TangoEntity with _$TangoEntity {
 
   const factory TangoEntity({
-    int? id,
-    required String indonesian,
-    required String japanese,
-    required String english,
-    required String? example,
-    @JsonKey(name: 'example_jp') required String? exampleJp,
+    required String indonesian, required String japanese, required String english, required String? example, @JsonKey(name: 'example_jp') required String? exampleJp, int? id,
     int? level,
     @JsonKey(name: 'part_of_speech') int? partOfSpeech,
     String? description,
