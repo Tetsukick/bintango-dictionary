@@ -158,7 +158,13 @@ class TranslateRepository implements TranslateRepositoryProtocol {
       }
     }
     if (searchedWord == null) {
-      unawaited(registerUnregisteredWord(value));
+      final searchResultInUnregisteredWords =
+        await searchInUnregisteredWord(value);
+      if (searchResultInUnregisteredWords == null || searchResultInUnregisteredWords.isEmpty) {
+        unawaited(registerUnregisteredWord(value));
+      } else {
+        return searchResultInUnregisteredWords.first.toTangoEntity();
+      }
     }
     return searchedWord;
   }
@@ -327,6 +333,20 @@ class TranslateRepository implements TranslateRepositoryProtocol {
         .eq('indonesian', searchText);
     final searchWordList =
       searchWordJsonList.map(TangoEntity.fromJson).toList();
+    return searchWordList;
+  }
+
+  Future<List<UnregisteredTangoEntity>> searchInUnregisteredWord(String search) async {
+    final searchText = search.toLowerCase()
+        .replaceAll('.', '')
+        .replaceAll(',', '')
+        .replaceAll('\n', '');
+    final searchWordJsonList = await Supabase.instance.client
+        .from('unregistered_words')
+        .select()
+        .eq('indonesian', searchText);
+    final searchWordList =
+    searchWordJsonList.map(UnregisteredTangoEntity.fromJson).toList();
     return searchWordList;
   }
 

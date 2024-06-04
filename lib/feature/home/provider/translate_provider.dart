@@ -42,6 +42,10 @@ class TranslateNotifier extends _$TranslateNotifier {
     if (response != null) {
       state.searchedWord = response;
       unawaited(searchRelatedWords());
+    } else {
+      state
+        ..searchedWord = null
+        ..relatedWords = [];
     }
     state.isLoading = false;
     state = state.copyWith();

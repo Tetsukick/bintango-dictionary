@@ -196,7 +196,7 @@ class __$$UnregisteredTangoEntityImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
+class _$UnregisteredTangoEntityImpl extends _UnregisteredTangoEntity {
   const _$UnregisteredTangoEntityImpl(
       {this.id,
       required this.indonesian,
@@ -205,7 +205,8 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
       required this.example,
       @JsonKey(name: 'example_jp') required this.exampleJp,
       @JsonKey(name: 'part_of_speech') this.partOfSpeech,
-      this.description});
+      this.description})
+      : super._();
 
   factory _$UnregisteredTangoEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnregisteredTangoEntityImplFromJson(json);
@@ -274,7 +275,7 @@ class _$UnregisteredTangoEntityImpl implements _UnregisteredTangoEntity {
   }
 }
 
-abstract class _UnregisteredTangoEntity implements UnregisteredTangoEntity {
+abstract class _UnregisteredTangoEntity extends UnregisteredTangoEntity {
   const factory _UnregisteredTangoEntity(
       {final int? id,
       required final String indonesian,
@@ -284,6 +285,7 @@ abstract class _UnregisteredTangoEntity implements UnregisteredTangoEntity {
       @JsonKey(name: 'example_jp') required final String? exampleJp,
       @JsonKey(name: 'part_of_speech') final String? partOfSpeech,
       final String? description}) = _$UnregisteredTangoEntityImpl;
+  const _UnregisteredTangoEntity._() : super._();
 
   factory _UnregisteredTangoEntity.fromJson(Map<String, dynamic> json) =
       _$UnregisteredTangoEntityImpl.fromJson;

@@ -142,11 +142,14 @@ class WordDetailCardWide extends ConsumerWidget {
   }
 
   Widget _partOfSpeech(TangoEntity entity) {
-    return Row(
-      children: [
-        TextWidget.titleWhiteSmallBoldWithBackGround(PartOfSpeechExt.intToPartOfSpeech(value: entity.partOfSpeech).title),
-        const SizedBox(width: 12),
-      ],
+    return Visibility(
+      visible: entity.partOfSpeech != null,
+      child: Row(
+        children: [
+          TextWidget.titleWhiteSmallBoldWithBackGround(PartOfSpeechExt.intToPartOfSpeech(value: entity.partOfSpeech ?? 1).title),
+          const SizedBox(width: 12),
+        ],
+      ),
     );
   }
 

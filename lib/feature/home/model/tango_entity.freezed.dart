@@ -20,16 +20,16 @@ TangoEntity _$TangoEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TangoEntity {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get indonesian => throw _privateConstructorUsedError;
   String get japanese => throw _privateConstructorUsedError;
   String get english => throw _privateConstructorUsedError;
   String? get example => throw _privateConstructorUsedError;
   @JsonKey(name: 'example_jp')
   String? get exampleJp => throw _privateConstructorUsedError;
-  int get level => throw _privateConstructorUsedError;
+  int? get level => throw _privateConstructorUsedError;
   @JsonKey(name: 'part_of_speech')
-  int get partOfSpeech => throw _privateConstructorUsedError;
+  int? get partOfSpeech => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int? get category => throw _privateConstructorUsedError;
   int? get frequency => throw _privateConstructorUsedError;
@@ -49,14 +49,14 @@ abstract class $TangoEntityCopyWith<$Res> {
       _$TangoEntityCopyWithImpl<$Res, TangoEntity>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String indonesian,
       String japanese,
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
-      int level,
-      @JsonKey(name: 'part_of_speech') int partOfSpeech,
+      int? level,
+      @JsonKey(name: 'part_of_speech') int? partOfSpeech,
       String? description,
       int? category,
       int? frequency,
@@ -76,24 +76,24 @@ class _$TangoEntityCopyWithImpl<$Res, $Val extends TangoEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? indonesian = null,
     Object? japanese = null,
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
-    Object? level = null,
-    Object? partOfSpeech = null,
+    Object? level = freezed,
+    Object? partOfSpeech = freezed,
     Object? description = freezed,
     Object? category = freezed,
     Object? frequency = freezed,
     Object? rankFrequency = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       indonesian: null == indonesian
           ? _value.indonesian
           : indonesian // ignore: cast_nullable_to_non_nullable
@@ -114,14 +114,14 @@ class _$TangoEntityCopyWithImpl<$Res, $Val extends TangoEntity>
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: null == level
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
-              as int,
-      partOfSpeech: null == partOfSpeech
+              as int?,
+      partOfSpeech: freezed == partOfSpeech
           ? _value.partOfSpeech
           : partOfSpeech // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -151,14 +151,14 @@ abstract class _$$TangoEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String indonesian,
       String japanese,
       String english,
       String? example,
       @JsonKey(name: 'example_jp') String? exampleJp,
-      int level,
-      @JsonKey(name: 'part_of_speech') int partOfSpeech,
+      int? level,
+      @JsonKey(name: 'part_of_speech') int? partOfSpeech,
       String? description,
       int? category,
       int? frequency,
@@ -176,24 +176,24 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? indonesian = null,
     Object? japanese = null,
     Object? english = null,
     Object? example = freezed,
     Object? exampleJp = freezed,
-    Object? level = null,
-    Object? partOfSpeech = null,
+    Object? level = freezed,
+    Object? partOfSpeech = freezed,
     Object? description = freezed,
     Object? category = freezed,
     Object? frequency = freezed,
     Object? rankFrequency = freezed,
   }) {
     return _then(_$TangoEntityImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       indonesian: null == indonesian
           ? _value.indonesian
           : indonesian // ignore: cast_nullable_to_non_nullable
@@ -214,14 +214,14 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
           ? _value.exampleJp
           : exampleJp // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: null == level
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
-              as int,
-      partOfSpeech: null == partOfSpeech
+              as int?,
+      partOfSpeech: freezed == partOfSpeech
           ? _value.partOfSpeech
           : partOfSpeech // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -246,14 +246,14 @@ class __$$TangoEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TangoEntityImpl implements _TangoEntity {
   const _$TangoEntityImpl(
-      {required this.id,
+      {this.id,
       required this.indonesian,
       required this.japanese,
       required this.english,
       required this.example,
       @JsonKey(name: 'example_jp') required this.exampleJp,
-      required this.level,
-      @JsonKey(name: 'part_of_speech') required this.partOfSpeech,
+      this.level,
+      @JsonKey(name: 'part_of_speech') this.partOfSpeech,
       this.description,
       this.category,
       this.frequency,
@@ -263,7 +263,7 @@ class _$TangoEntityImpl implements _TangoEntity {
       _$$TangoEntityImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   final String indonesian;
   @override
@@ -276,10 +276,10 @@ class _$TangoEntityImpl implements _TangoEntity {
   @JsonKey(name: 'example_jp')
   final String? exampleJp;
   @override
-  final int level;
+  final int? level;
   @override
   @JsonKey(name: 'part_of_speech')
-  final int partOfSpeech;
+  final int? partOfSpeech;
   @override
   final String? description;
   @override
@@ -355,14 +355,14 @@ class _$TangoEntityImpl implements _TangoEntity {
 
 abstract class _TangoEntity implements TangoEntity {
   const factory _TangoEntity(
-          {required final int id,
+          {final int? id,
           required final String indonesian,
           required final String japanese,
           required final String english,
           required final String? example,
           @JsonKey(name: 'example_jp') required final String? exampleJp,
-          required final int level,
-          @JsonKey(name: 'part_of_speech') required final int partOfSpeech,
+          final int? level,
+          @JsonKey(name: 'part_of_speech') final int? partOfSpeech,
           final String? description,
           final int? category,
           final int? frequency,
@@ -373,7 +373,7 @@ abstract class _TangoEntity implements TangoEntity {
       _$TangoEntityImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String get indonesian;
   @override
@@ -386,10 +386,10 @@ abstract class _TangoEntity implements TangoEntity {
   @JsonKey(name: 'example_jp')
   String? get exampleJp;
   @override
-  int get level;
+  int? get level;
   @override
   @JsonKey(name: 'part_of_speech')
-  int get partOfSpeech;
+  int? get partOfSpeech;
   @override
   String? get description;
   @override
