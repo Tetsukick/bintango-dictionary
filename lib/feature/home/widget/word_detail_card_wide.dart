@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:highlight_text/highlight_text.dart';
 import 'package:lottie/lottie.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class WordDetailCardWide extends ConsumerWidget {
   const WordDetailCardWide({required this.entity, super.key});
@@ -56,7 +57,9 @@ class WordDetailCardWide extends ConsumerWidget {
 
   Widget shimmerWordCard(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2,
+      width: MediaQuery.of(context).size.width /
+          (ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 2 :
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 1.2 : 1.1),
       decoration: BoxDecoration(
           image: DecorationImage(
             image: Assets.image.houganshi.provider(),
@@ -102,7 +105,9 @@ class WordDetailCardWide extends ConsumerWidget {
 
   Widget wordCard(BuildContext context, TangoEntity entity) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2,
+      width: MediaQuery.of(context).size.width /
+          (ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 2 :
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 1.2 : 1.1),
       decoration: BoxDecoration(
           image: DecorationImage(
             image: Assets.image.houganshi.provider(),

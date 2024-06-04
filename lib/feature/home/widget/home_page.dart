@@ -136,11 +136,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     final state = ref.watch(translateNotifierProvider);
     return Container(
       height: 200,
-      width: MediaQuery.of(context).size.width / 2,
+      width: MediaQuery.of(context).size.width /
+          (ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 2 :
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 1.3 : 1.1),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Assets.image.searchboxBackground.provider(),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(24),
       ),
@@ -160,17 +162,20 @@ class _HomePageState extends ConsumerState<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 16 : 8),
           child: _searchBoxTitle(context),
         ),
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 16 : 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width / 3,
+                width: (MediaQuery.of(context).size.width /
+                    (ResponsiveBreakpoints.of(context).largerThan(TABLET) ? 2 :
+                    ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 1.3 : 1.08)) -
+                    (ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 124 : 40),
                 child: TextField(
                   maxLength: 50,
                   controller: _inputController,
@@ -182,31 +187,28 @@ class _HomePageState extends ConsumerState<HomePage> {
                     filled: true,
                     hintText: '調べたい単語を入力してください。',
                     alignLabelWithHint: true,
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: _inputController.clear,
+                    suffixIcon: ResponsiveBreakpoints.of(context).largerThan(MOBILE) ?
+                      IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: _inputController.clear,
+                      )
+                      : IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: search,
                     ),
                   ),
                   onChanged: notifier.updateInputText,
-                  onEditingComplete: () {
-                    ref.read(routerProvider).go(
-                      DictionaryDetailRoute.path
-                          .replaceFirst(':searchWord', state.inputtedText),);
-                  },
+                  onEditingComplete: search,
                 ),
               ),
-              ElevatedButton(
+              if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+                ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: ColorConstants.primaryRed900,
                   shape: const CircleBorder(),
                 ),
-                onPressed: () {
-                  FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
-                  ref.read(routerProvider).go(
-                      DictionaryDetailRoute.path
-                          .replaceFirst(':searchWord', state.inputtedText),);
-                },
+                onPressed: search,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Assets.image.search128.image(
@@ -225,5 +227,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _searchBoxTitle(BuildContext context,) {
     return TextWidget.titleRedLargestBold(
       '調べたいインドネシア語を入力♪',);
+  }
+  
+  void search() {
+    final state = ref.watch(translateNotifierProvider);
+    FirebaseAnalyticsUtils.eventsTrack(HomeItem.search);
+    ref.read(routerProvider).go(
+      DictionaryDetailRoute.path
+          .replaceFirst(':searchWord', state.inputtedText),);
   }
 }
