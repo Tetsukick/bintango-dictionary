@@ -17,8 +17,7 @@ class NotFoundPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: ColorConstants.bgPinkColor,
       appBar: AppBar(
-        toolbarHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
-            ? 120 : 80,
+        toolbarHeight: 80,
         backgroundColor: ColorConstants.bgPinkColor,
         title: Row(
           children: [
@@ -26,13 +25,9 @@ class NotFoundPage extends ConsumerWidget {
             InkWell(
               child: Row(
                 children: [
-                  Assets.image.bintangoLogo256.image(height:
-                  ResponsiveBreakpoints.of(context)
-                      .largerThan(MOBILE) ? 80 : 48,),
+                  Assets.image.bintangoLogo256.image(height: 48,),
                   const SizedBox(width: 16,),
-                  Assets.image.bintangoDictionaryLogo.svg(height:
-                  ResponsiveBreakpoints.of(context)
-                      .largerThan(MOBILE) ? 80 : 48,),
+                  Assets.image.bintangoDictionaryLogo.image(height: 48,),
                 ],
               ),
               onTap: () {

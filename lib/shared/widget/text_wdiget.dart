@@ -193,6 +193,20 @@ class TextWidget {
     );
   }
 
+  static Widget titleGrayMediumSmallBoldNotSelectable(String data, {int maxLines = 1}) {
+    return AutoSizeText(
+      data,
+      maxLines: maxLines,
+      minFontSize: 14,
+      maxFontSize: 18,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        color: ColorConstants.fontGrey,
+        fontSize: 18,
+      ),
+    );
+  }
+
   static Widget titleGraySmallBold(String data, {
     int maxLines = 1,
     TextAlign textAlign = TextAlign.center,

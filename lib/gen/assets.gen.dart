@@ -8,8 +8,6 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 
 class $AssetsEnvGen {
   const $AssetsEnvGen();
@@ -30,9 +28,17 @@ class $AssetsEnvGen {
 class $AssetsImageGen {
   const $AssetsImageGen();
 
-  /// File path: assets/image/bintango-dictionary-logo.svg
-  SvgGenImage get bintangoDictionaryLogo =>
-      const SvgGenImage('assets/image/bintango-dictionary-logo.svg');
+  /// File path: assets/image/bintango-dictionary-logo.png
+  AssetGenImage get bintangoDictionaryLogo =>
+      const AssetGenImage('assets/image/bintango-dictionary-logo.png');
+
+  /// File path: assets/image/bintango-guidance-1024x536.png
+  AssetGenImage get bintangoGuidance1024x536 =>
+      const AssetGenImage('assets/image/bintango-guidance-1024x536.png');
+
+  /// File path: assets/image/bintango-translate-thumbnail-1024x576.png
+  AssetGenImage get bintangoTranslateThumbnail1024x576 => const AssetGenImage(
+      'assets/image/bintango-translate-thumbnail-1024x576.png');
 
   /// File path: assets/image/bintango_logo_256.png
   AssetGenImage get bintangoLogo256 =>
@@ -53,6 +59,10 @@ class $AssetsImageGen {
   AssetGenImage get houganshi =>
       const AssetGenImage('assets/image/houganshi.png');
 
+  /// File path: assets/image/how-to-learn-indonesian-1024x536.png
+  AssetGenImage get howToLearnIndonesian1024x536 =>
+      const AssetGenImage('assets/image/how-to-learn-indonesian-1024x536.png');
+
   /// File path: assets/image/indonesia_64.png
   AssetGenImage get indonesia64 =>
       const AssetGenImage('assets/image/indonesia_64.png');
@@ -68,6 +78,11 @@ class $AssetsImageGen {
   AssetGenImage get japanFuji64 =>
       const AssetGenImage('assets/image/japan_fuji_64.png');
 
+  /// File path: assets/image/recommended-book-learning-indonesian-1024x536.png
+  AssetGenImage get recommendedBookLearningIndonesian1024x536 =>
+      const AssetGenImage(
+          'assets/image/recommended-book-learning-indonesian-1024x536.png');
+
   /// File path: assets/image/reverse_128.png
   AssetGenImage get reverse128 =>
       const AssetGenImage('assets/image/reverse_128.png');
@@ -80,21 +95,30 @@ class $AssetsImageGen {
   AssetGenImage get searchboxBackground =>
       const AssetGenImage('assets/image/searchbox_background.png');
 
+  /// File path: assets/image/souvenir-indonesia-top20-1024x536.png
+  AssetGenImage get souvenirIndonesiaTop201024x536 =>
+      const AssetGenImage('assets/image/souvenir-indonesia-top20-1024x536.png');
+
   /// List of all assets
-  List<dynamic> get values => [
+  List<AssetGenImage> get values => [
         bintangoDictionaryLogo,
+        bintangoGuidance1024x536,
+        bintangoTranslateThumbnail1024x576,
         bintangoLogo256,
         english64,
         example64,
         home128,
         houganshi,
+        howToLearnIndonesian1024x536,
         indonesia64,
         infoNotes,
         japan64,
         japanFuji64,
+        recommendedBookLearningIndonesian1024x536,
         reverse128,
         search128,
-        searchboxBackground
+        searchboxBackground,
+        souvenirIndonesiaTop201024x536
       ];
 }
 
@@ -200,59 +224,6 @@ class AssetGenImage {
       _assetName,
       bundle: bundle,
       package: package,
-    );
-  }
-
-  String get path => _assetName;
-
-  String get keyName => _assetName;
-}
-
-class SvgGenImage {
-  const SvgGenImage(this._assetName);
-
-  final String _assetName;
-
-  SvgPicture svg({
-    Key? key,
-    bool matchTextDirection = false,
-    AssetBundle? bundle,
-    String? package,
-    double? width,
-    double? height,
-    BoxFit fit = BoxFit.contain,
-    AlignmentGeometry alignment = Alignment.center,
-    bool allowDrawingOutsideViewBox = false,
-    WidgetBuilder? placeholderBuilder,
-    String? semanticsLabel,
-    bool excludeFromSemantics = false,
-    SvgTheme theme = const SvgTheme(),
-    ColorFilter? colorFilter,
-    Clip clipBehavior = Clip.hardEdge,
-    @deprecated Color? color,
-    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
-    @deprecated bool cacheColorFilter = false,
-  }) {
-    return SvgPicture.asset(
-      _assetName,
-      key: key,
-      matchTextDirection: matchTextDirection,
-      bundle: bundle,
-      package: package,
-      width: width,
-      height: height,
-      fit: fit,
-      alignment: alignment,
-      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
-      placeholderBuilder: placeholderBuilder,
-      semanticsLabel: semanticsLabel,
-      excludeFromSemantics: excludeFromSemantics,
-      theme: theme,
-      colorFilter: colorFilter,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      clipBehavior: clipBehavior,
-      cacheColorFilter: cacheColorFilter,
     );
   }
 

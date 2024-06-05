@@ -66,7 +66,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
                   children: [
                     Assets.image.bintangoLogo256.image(height: 48,),
                     const SizedBox(width: 16,),
-                    Assets.image.bintangoDictionaryLogo.svg(height: 48,),
+                    Assets.image.bintangoDictionaryLogo.image(height: 48,),
                   ],
                 ),
                 onTap: () {
