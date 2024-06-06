@@ -41,7 +41,7 @@ class WordDetailCardWide extends ConsumerWidget {
                 height: 300,
               ),
               TextWidget.titleGraySmallBold(
-                '申し訳ありません。。。\n『${state.inputtedText}』は、BINTANGOに登録されていないデータです。\n今後登録データを更新していく予定です。',
+                '申し訳ありません。。。\n『${state.inputtedText}』は、BINTANGOに登録されていないデータ、\nもしくは存在しないインドネシア語です。\n今後登録データを更新していく予定です。',
                 maxLines: 10,
               ),
               const SizedBox(height: 8,),

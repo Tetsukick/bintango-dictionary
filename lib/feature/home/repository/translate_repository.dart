@@ -188,6 +188,7 @@ class TranslateRepository implements TranslateRepositoryProtocol {
     final prompt =
     '''
     インドネシア語の「$text」について以下のデータを指定するjson形式で出力してください。
+    もし「$text」が存在しない場合は、空のjsonを出力してください。
     
     - 該当する日本語(複数ある場合は","つなぎで出力)
     - 該当する英語(複数ある場合は","つなぎで出力)
