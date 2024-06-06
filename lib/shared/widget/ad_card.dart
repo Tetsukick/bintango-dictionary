@@ -25,6 +25,7 @@ class AdCard extends StatelessWidget {
         launch(url);
       },
       child: Card(
+        color: Colors.white,
         child: SizedBox(
           width: 150,
           child: Padding(

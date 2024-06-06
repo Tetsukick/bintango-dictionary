@@ -34,6 +34,7 @@ class WordDetailCard extends ConsumerWidget {
 
   Widget shimmerWordCard() {
     return Card(
+      color: Colors.white,
       child: SizedBox(
         width: 150,
         child: Padding(
@@ -75,6 +76,7 @@ class WordDetailCard extends ConsumerWidget {
 
   Widget wordCard(TangoEntity entity) {
     return Card(
+      color: Colors.white,
       child: SizedBox(
         width: 150,
         child: Padding(

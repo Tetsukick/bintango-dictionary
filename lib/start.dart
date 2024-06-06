@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:html' as html;
 
 import 'package:bintango_indonesian_dictionary/app/app.dart';
 import 'package:bintango_indonesian_dictionary/firebase_options.dart';
@@ -38,6 +39,8 @@ Future<void> start() async {
   if (kIsWeb) {
     MetaSEO().config();
   }
+
+  var cookies = html.window.document.cookie;
 
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en')],
