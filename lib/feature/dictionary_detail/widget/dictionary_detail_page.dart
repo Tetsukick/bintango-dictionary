@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:bintango_indonesian_dictionary/feature/home/model/side_menu.dart';
 import 'package:bintango_indonesian_dictionary/feature/home/provider/translate_provider.dart';
@@ -12,7 +15,9 @@ import 'package:bintango_indonesian_dictionary/shared/util/analytics/analytics_p
 import 'package:bintango_indonesian_dictionary/shared/util/analytics/firebase_analytics.dart';
 import 'package:bintango_indonesian_dictionary/shared/util/open_url.dart';
 import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:meta_seo/meta_seo.dart';
@@ -35,6 +40,8 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
   final double _iconHeight = 28;
   final double _iconWidth = 28;
 
+  final _globalKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +52,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
       await ref.watch(translateNotifierProvider.notifier)
           .searchWithWord(widget.searchWord);
       final state = ref.watch(translateNotifierProvider);
-      updateMetaInfo();
+      await updateMetaInfo();
     });
   }
 
@@ -248,11 +255,25 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
     updateMetaInfo();
   }
 
-  void updateMetaInfo() {
+  Future<void> updateMetaInfo() async {
     final state = ref.watch(translateNotifierProvider);
     final meta = MetaSEO();
-    meta.description(description: '『${widget.searchWord}』は、日本語で、『${state.searchedWord?.japanese ?? ''}』を意味します。英語では、『${state.searchedWord?.english ?? ''}』を意味します。');
+    final description = '『${widget.searchWord}』は、日本語で、『${state.searchedWord?.japanese ?? ''}』を意味します。英語では、『${state.searchedWord?.english ?? ''}』を意味します。';
+    final title = '『${widget.searchWord}』の意味をインドネシア語辞書で検索 | BINTANGO DICTIONARY';
+    meta.ogTitle(ogTitle: title);
+    meta.description(description: description);
     meta.keywords(keywords: 'インドネシア語, インドネシア語辞書, インドネシア語学習, インドネシア語勉強, ${widget.searchWord}, ${state.searchedWord?.japanese}, ${state.searchedWord?.japanese}');
+
+    if (state.searchedWord != null) {
+      final imageUrl = await exportToImageAndUploadFireStorage();
+      if (imageUrl != null) {
+        meta
+          ..twitterCard(twitterCard: TwitterCard.summaryLargeImage)
+          ..twitterImage(twitterImage: imageUrl)
+          ..twitterTitle(twitterTitle: title)
+          ..twitterDescription(twitterDescription: description);
+      }
+    }
   }
 
   Widget _detailDescriptionArea(BuildContext context, WidgetRef ref) {
@@ -266,7 +287,10 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
 
   Widget _searchedWord(BuildContext context, WidgetRef ref) {
     final state = ref.watch(translateNotifierProvider);
-    return WordDetailCardWide(entity: state.searchedWord);
+    return RepaintBoundary(
+      key: _globalKey,
+      child: WordDetailCardWide(entity: state.searchedWord),
+    );
   }
 
   Widget _relatedWordArea(BuildContext context, WidgetRef ref) {
@@ -320,5 +344,36 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
         color: ColorConstants.bgGreySeparater,
       ),
     );
+  }
+
+  Future<String?> exportToImageAndUploadFireStorage() async {
+    final state = ref.watch(translateNotifierProvider);
+    if (state.searchedWord != null) {
+      final storageRef = FirebaseStorage.instance.ref();
+      final dictionaryDetailCardImage = storageRef.child("dictionary_twitter_image/${state.searchedWord!.indonesian!}.png");
+
+      String? downloadImageUrl;
+      try {
+        downloadImageUrl = await dictionaryDetailCardImage.getDownloadURL();
+      } catch (e) {
+        await Future.delayed(const Duration(seconds: 3));
+        final boundary =
+        _globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+        final image = await boundary.toImage(
+          pixelRatio: 2,
+        );
+        final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+        if (byteData != null) {
+          final base64img = base64Encode(byteData.buffer.asUint8List());
+          final uploadTask = await dictionaryDetailCardImage
+              .putString(base64img, format: PutStringFormat.base64);
+
+          downloadImageUrl = await uploadTask.ref.getDownloadURL();
+        }
+      }
+      return downloadImageUrl;
+    } else {
+      return null;
+    }
   }
 }
