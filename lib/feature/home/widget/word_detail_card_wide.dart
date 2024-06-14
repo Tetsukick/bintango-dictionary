@@ -51,7 +51,7 @@ class WordDetailCardWide extends ConsumerWidget {
         }
         return const SizedBox.shrink();
       }
-      return wordCard(context, entity!).amShimmer;
+      return wordCard(context, entity!);
     }
   }
 

@@ -25,10 +25,10 @@ class WordDetailCard extends ConsumerWidget {
       if (entity == null) {
         return shimmerWordCard();
       } else {
-        return wordCard(entity!).shimmer;
+        return wordCard(entity!);
       }
     } else {
-      return wordCard(entity!).amShimmer;
+      return wordCard(entity!);
     }
   }
 

@@ -16,7 +16,7 @@ class AdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return adCardContents().amShimmer;
+    return adCardContents();
   }
 
   Widget adCardContents() {

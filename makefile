@@ -107,7 +107,7 @@ build_apk_prod: ## Runs the mobile application in prod
 	@flutter build apk --flavor production -t lib/main_production.dar
 
 build_web_prod: ## Runs the mobile application in prod
-	@fvm flutter build web --web-renderer html -t lib/main_production.dart
+	@fvm flutter build web --web-renderer canvaskit -t lib/main_production.dart
 
 purge: ## Purges the Flutter 
 	@pod deintegrate
