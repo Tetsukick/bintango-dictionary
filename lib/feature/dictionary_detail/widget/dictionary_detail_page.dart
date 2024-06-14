@@ -18,6 +18,7 @@ import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:meta_seo/meta_seo.dart';
@@ -364,7 +365,13 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
         );
         final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
         if (byteData != null) {
-          final base64img = base64Encode(byteData.buffer.asUint8List());
+          final imageUint8list = byteData.buffer.asUint8List();
+          final compressedImageUint8List = await FlutterImageCompress
+              .compressWithList(
+                imageUint8list,
+                quality: 80,
+              );
+          final base64img = base64Encode(compressedImageUint8List);
           final uploadTask = await dictionaryDetailCardImage
               .putString(base64img, format: PutStringFormat.base64);
 
