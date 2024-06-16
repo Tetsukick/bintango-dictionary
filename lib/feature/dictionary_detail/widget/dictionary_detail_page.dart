@@ -270,6 +270,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
       if (imageUrl != null) {
         meta
           ..twitterCard(twitterCard: TwitterCard.summaryLargeImage)
+          ..ogImage(ogImage: imageUrl)
           ..twitterImage(twitterImage: imageUrl)
           ..twitterTitle(twitterTitle: title)
           ..twitterDescription(twitterDescription: description);
@@ -378,6 +379,7 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
               .putString(base64img, format: PutStringFormat.base64);
 
           downloadImageUrl = await uploadTask.ref.getDownloadURL();
+          downloadImageUrl = 'https://storage.cloud.google.com/indonesian-flash-card.appspot.com/$imagePath';
         }
       }
       return downloadImageUrl;

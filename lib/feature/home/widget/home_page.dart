@@ -13,6 +13,7 @@ import 'package:bintango_indonesian_dictionary/shared/widget/text_wdiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:meta_seo/meta_seo.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -36,6 +37,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     FirebaseAnalyticsUtils.screenTrack(AnalyticsScreen.BDhome);
     final loading = querySelector('.loading') as DivElement?;
     if (loading != null) loading.remove();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await updateMetaInfo();
+    });
   }
 
   @override
@@ -260,6 +264,23 @@ class _HomePageState extends ConsumerState<HomePage> {
     } else {
       return 1;
     }
+  }
+
+  Future<void> updateMetaInfo() async {
+    final meta = MetaSEO();
+    const description = '解説付き, 関連単語付き, 全単語例文付きで分かりやすいインドネシア語辞書';
+    const title = '全単語例文付きのオンラインインドネシア語辞書 | BINTANGO DICTIONARY';
+    const imageUrl = "https://jogjalanjalan.com/wp-content/uploads/2024/06/bintango-dictionary-introduction.png";
+    meta
+      ..ogTitle(ogTitle: title)
+      ..ogDescription(ogDescription: description)
+      ..description(description: description)
+      ..keywords(keywords: 'インドネシア語, インドネシア語辞書, インドネシア語学習, インドネシア語勉強, Bahasa Indonesia')
+      ..twitterCard(twitterCard: TwitterCard.summaryLargeImage)
+      ..ogImage(ogImage: imageUrl)
+      ..twitterImage(twitterImage: imageUrl)
+      ..twitterTitle(twitterTitle: title)
+      ..twitterDescription(twitterDescription: description);
   }
 }
 
