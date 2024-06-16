@@ -351,11 +351,13 @@ class _DictionaryDetailPageState extends ConsumerState<DictionaryDetailPage> {
     final state = ref.watch(translateNotifierProvider);
     if (state.searchedWord != null) {
       final storageRef = FirebaseStorage.instance.ref();
-      final dictionaryDetailCardImage = storageRef.child("dictionary_twitter_image/${state.searchedWord!.indonesian!}.png");
+      final imagePath = 'dictionary_twitter_image/${state.searchedWord!.indonesian!}.png';
+      final dictionaryDetailCardImage = storageRef.child(imagePath);
 
       String? downloadImageUrl;
       try {
         downloadImageUrl = await dictionaryDetailCardImage.getDownloadURL();
+        downloadImageUrl = 'https://storage.cloud.google.com/indonesian-flash-card.appspot.com/$imagePath';
       } catch (e) {
         await Future.delayed(const Duration(seconds: 3));
         final boundary =
